@@ -6,5 +6,7 @@
     OnAsteroidCollision,
     OnScoreUpdate,
     OnPlayerPositionUpdate,
-    OnPlayingTimeUpdate
+    OnPlayingTimeUpdate,
+    OnAsteroidPassed,
+    OnPlayerBoostStatusChange
 }

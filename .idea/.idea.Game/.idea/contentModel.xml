@@ -37,8 +37,10 @@
           </e>
           <e p="MessageSystem" t="Include">
             <e p="Data" t="Include">
+              <e p="AsteroidPassedData.cs" t="Include" />
               <e p="AxisData.cs" t="Include" />
               <e p="KeyData.cs" t="Include" />
+              <e p="PlayerBoostStatus.cs" t="Include" />
               <e p="PositionData.cs" t="Include" />
               <e p="ScoreData.cs" t="Include" />
               <e p="TimeData.cs" t="Include" />

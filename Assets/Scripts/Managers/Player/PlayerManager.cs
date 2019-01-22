@@ -20,12 +20,8 @@ public class PlayerManager : MonoBehaviour
 
     private bool _boost;
     
-    private int _score;
-    
     private void Awake()
     {
-        InvokeRepeating("OnSecond", 1.0f, 1f);
-        
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
@@ -48,10 +44,9 @@ public class PlayerManager : MonoBehaviour
     private void OnInputAxis(AxisData axisData)
     {       
         Vector3 rotation = transform.rotation.eulerAngles;
-
         rotation.y = 90 * axisData.HorizontalAxis;
         
-        //transform.rotation = Quaternion.Euler(rotation);
+        transform.rotation = Quaternion.Euler(rotation);
         
 
         Vector3 movementVector = axisData.HorizontalAxis > 0f ? Vector3.right : Vector3.left;
@@ -68,6 +63,8 @@ public class PlayerManager : MonoBehaviour
         if (keyData.KeyCode.Equals(KeyCode.Space))
         {
             _boost = true;
+            
+            MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
         }
     }
     
@@ -76,20 +73,9 @@ public class PlayerManager : MonoBehaviour
         if (keyData.KeyCode.Equals(KeyCode.Space))
         {
             _boost = false;
+            
+            MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
         }
     }
-    
-    private void OnSecond()
-    {
-        if (_boost)
-        {
-            _score += 2;
-        }
-        else
-        {
-            _score++;
-        }
-        
-        MessageSystemManager.Invoke(MessageType.OnScoreUpdate, new ScoreData(_score));
-    }
+
 }

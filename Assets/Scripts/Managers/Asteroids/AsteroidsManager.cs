@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -29,12 +29,18 @@ public class AsteroidsManager : MonoBehaviour
 	private float _playerYDistanceTolerance = 0.0001f;
 
 	private List<Asteroid> _asteroidInstances = new List<Asteroid>();
+	
+	private List<Asteroid> _passedAsteroids = new List<Asteroid>();
 
 	private Vector3 _previousPosition = Vector3.zero;
+
+	private int _asteroidsPassed;
 	
 	void Awake ()
 	{
 		InstantiateAsteroids();
+		
+		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 	}
 
 	private void Update()
@@ -45,6 +51,8 @@ public class AsteroidsManager : MonoBehaviour
 		{
 			if (asteroid.transform.position.y < screenBottomWorldCoordinate.y)
 			{
+				_passedAsteroids.Remove(asteroid);
+				
 				asteroid.transform.position = GetNewPosition();
 			}
 		}
@@ -83,5 +91,23 @@ public class AsteroidsManager : MonoBehaviour
 		_previousPosition = position;
 
 		return position;
+	}
+
+	private void OnPlayerPositionUpdate(PositionData positionData)
+	{
+		foreach (Asteroid asteroid in _asteroidInstances)
+		{
+			if (asteroid.transform.position.y < positionData.Position.y)
+			{
+				if (!_passedAsteroids.Contains(asteroid))
+				{
+					_passedAsteroids.Add(asteroid);
+
+					_asteroidsPassed++;
+				
+					MessageSystemManager.Invoke(MessageType.OnAsteroidPassed, new AsteroidPassedData(_asteroidsPassed));
+				}
+			}
+		}
 	}
 }
