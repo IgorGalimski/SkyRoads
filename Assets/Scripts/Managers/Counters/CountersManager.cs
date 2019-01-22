@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DefaultNamespace.Managers
 {
-    public class Counters : MonoBehaviour
+    public class CountersManager : MonoBehaviour
     {
         private const string TIME_PLAYING_FORMAT = "{0}:{1}:{2}";
         

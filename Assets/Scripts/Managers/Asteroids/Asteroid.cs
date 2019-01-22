@@ -14,7 +14,7 @@ public class Asteroid : MonoBehaviour
         transform.Rotate(_rotationDirection * _speed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
     }

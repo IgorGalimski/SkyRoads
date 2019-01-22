@@ -33,7 +33,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.up  * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f));
+        transform.position += Vector3.up * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
     }
@@ -46,19 +46,18 @@ public class PlayerManager : MonoBehaviour
     }
     
     private void OnInputAxis(AxisData axisData)
-    {
-        //rotatitiom
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        pos.x = (axisData.HorizontalAxis + 1f)/2;
-        //transform.position = Camera.main.ViewportToWorldPoint(pos);
+    {       
+        Vector3 rotation = transform.rotation.eulerAngles;
+
+        rotation.y = 90 * axisData.HorizontalAxis;
+        
+        //transform.rotation = Quaternion.Euler(rotation);
+        
 
         Vector3 movementVector = axisData.HorizontalAxis > 0f ? Vector3.right : Vector3.left;
-        transform.Translate(movementVector * Time.deltaTime * _xMoveSpeed);
-
-        //NormalizePosition();
+        transform.position += movementVector * Time.deltaTime * _xMoveSpeed;
 
         Vector3 position = transform.position;
-
         position.x = Mathf.Clamp(position.x, _xMin, _xMax);
         
         transform.position = position;

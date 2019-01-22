@@ -11,10 +11,10 @@ public class AsteroidsManager : MonoBehaviour
 	private const string ASTEROID_NAME = "Asteroid: {0}";
 	
 	[SerializeField]
-	private Vector2 _minPosition;
+	private float _minXPosition;
     
 	[SerializeField]
-	private Vector2 _maxPosition;
+	private float _maxXPosition;
 
 	[SerializeField]
 	private Vector2 _distMin;
@@ -35,8 +35,19 @@ public class AsteroidsManager : MonoBehaviour
 	void Awake ()
 	{
 		InstantiateAsteroids();
+	}
+
+	private void Update()
+	{
+		Vector3 screenBottomWorldCoordinate = Camera.main.ViewportToWorldPoint(Vector3.zero);
 		
-		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
+		foreach (Asteroid asteroid in _asteroidInstances)
+		{
+			if (asteroid.transform.position.y < screenBottomWorldCoordinate.y)
+			{
+				asteroid.transform.position = GetNewPosition();
+			}
+		}
 	}
 
 	private void InstantiateAsteroids()
@@ -64,24 +75,13 @@ public class AsteroidsManager : MonoBehaviour
 		float distanceX = Random.Range(_distMin.x, _distMax.x);
 		float distanceY = Random.Range(_distMin.y, _distMax.y);
 
-		float x = Mathf.Clamp(distanceX + _previousPosition.x, _minPosition.x, _maxPosition.x);
-		float y = Mathf.Clamp(distanceY + _previousPosition.y, _minPosition.y, _maxPosition.y);
+		float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);
+		float y = distanceY + _previousPosition.y;
 		
 		Vector3 position = new Vector3(x, y, 0);
 
 		_previousPosition = position;
 
 		return position;
-	}
-
-	private void OnPlayerPositionUpdate(PositionData positionData)
-	{
-		foreach (Asteroid asteroid in _asteroidInstances)
-		{
-			if (Math.Abs(asteroid.transform.position.y - positionData.Position.y) < _playerYDistanceTolerance)
-			{
-				Debug.Log(asteroid.name + " " + asteroid.transform.position.y + " -> " + positionData.Position.y + "  " );
-			}
-		}
 	}
 }
