@@ -282,7 +282,6 @@ GameObject:
   - component: {fileID: 1461238174}
   - component: {fileID: 1461238173}
   - component: {fileID: 1461238172}
-  - component: {fileID: 1461238171}
   - component: {fileID: 1461238170}
   m_Layer: 0
   m_Name: Player
@@ -302,18 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee40b61ec22469c842f6cbd8ac75ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1461238171
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1461238169}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  _xMoveSpeed: 5
+  _yMoveSpeed: 5
+  _xMinBorder: 0.1
+  _xMaxBorder: 0.2
+  _boostMultiplier: 20
 --- !u!23 &1461238172
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -399,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab044fbc1ad34380bb4e82e18e14db79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tolerance: 0
+  _tolerance: 0.001
 --- !u!65 &2047437457
 BoxCollider:
   m_ObjectHideFlags: 0

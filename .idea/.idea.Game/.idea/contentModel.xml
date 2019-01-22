@@ -22,17 +22,22 @@
               <e p="Asteroid.cs" t="Include" />
               <e p="AsteroidsManager.cs" t="Include" />
             </e>
-            <e p="Input.cs" t="Include" />
+            <e p="Input" t="Include">
+              <e p="InputManager.cs" t="Include" />
+            </e>
+            <e p="Player" t="Include">
+              <e p="PlayerManager.cs" t="Include" />
+            </e>
           </e>
           <e p="MessageSystem" t="Include">
             <e p="Data" t="Include">
               <e p="AxisData.cs" t="Include" />
+              <e p="KeyData.cs" t="Include" />
             </e>
             <e p="MessageData.cs" t="Include" />
             <e p="MessageSystemManager.cs" t="Include" />
             <e p="MessageType.cs" t="Include" />
           </e>
-          <e p="Player.cs" t="Include" />
           <e p="SmoothFollow.cs" t="Include" />
         </e>
         <e p="Shaders" t="Include">

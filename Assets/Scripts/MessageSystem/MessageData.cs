@@ -1,6 +1,3 @@
-namespace DefaultNamespace.MessageSystem
-{
-    public interface IMessageData
-    {
-    }
-}
+public interface IMessageData
+ {
+ }

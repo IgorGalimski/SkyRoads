@@ -1,4 +1,6 @@
 ﻿public enum MessageType 
 {
-    OnAxisInput
+    OnAxisInput,
+    OnKeyDown,
+    OnKeyUp
 }
