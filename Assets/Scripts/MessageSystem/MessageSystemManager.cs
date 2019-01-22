@@ -8,8 +8,7 @@ public static class MessageSystemManager
 
     private delegate void EventDelegate (IMessageData e);
     
-    private static Dictionary<MessageType, EventDelegate> _actions =
-        new Dictionary<MessageType, EventDelegate>();
+    private static Dictionary<MessageType, EventDelegate> _actions = new Dictionary<MessageType, EventDelegate>();
     public static void AddListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
     {
         if (action == null)
@@ -46,7 +45,7 @@ public static class MessageSystemManager
         _actions[messageType] -= currentEventDelegate;
     }
 
-    public static void Invoke(MessageType messageType, IMessageData messageData)
+    public static void Invoke(MessageType messageType, IMessageData messageData = null)
     {
         if (!_actions.ContainsKey(messageType))
         {

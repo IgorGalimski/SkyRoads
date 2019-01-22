@@ -22,6 +22,12 @@
               <e p="Asteroid.cs" t="Include" />
               <e p="AsteroidsManager.cs" t="Include" />
             </e>
+            <e p="Counters" t="Include">
+              <e p="Counters.cs" t="Include" />
+            </e>
+            <e p="Game" t="Include">
+              <e p="GameManager.cs" t="Include" />
+            </e>
             <e p="Input" t="Include">
               <e p="InputManager.cs" t="Include" />
             </e>
@@ -33,6 +39,9 @@
             <e p="Data" t="Include">
               <e p="AxisData.cs" t="Include" />
               <e p="KeyData.cs" t="Include" />
+              <e p="PositionData.cs" t="Include" />
+              <e p="ScoreData.cs" t="Include" />
+              <e p="TimeData.cs" t="Include" />
             </e>
             <e p="MessageData.cs" t="Include" />
             <e p="MessageSystemManager.cs" t="Include" />

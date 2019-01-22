@@ -2,5 +2,9 @@
 {
     OnAxisInput,
     OnKeyDown,
-    OnKeyUp
+    OnKeyUp,
+    OnAsteroidCollision,
+    OnScoreUpdate,
+    OnPlayerPositionUpdate,
+    OnPlayingTimeUpdate
 }

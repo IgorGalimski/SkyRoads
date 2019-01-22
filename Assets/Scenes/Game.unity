@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 23824138}
   - component: {fileID: 23824137}
   - component: {fileID: 23824136}
+  - component: {fileID: 23824139}
+  - component: {fileID: 23824140}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -190,6 +192,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23824139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23824135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0880c2d1583b0a146985baad05098107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 10
+  height: 5
+  heightDamping: 2
+  rotationDamping: 3
+  target: {fileID: 1461238174}
+--- !u!114 &23824140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23824135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccaa9e7842d98554ca72f96b86dc389e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &443764208
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,10 +247,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9057b17b945e74f9e1da6b9bcf6566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _min: {x: -10, y: 0}
-  _max: {x: 10, y: 100}
+  _minPosition: {x: -5, y: 0}
+  _maxPosition: {x: 5, y: 100}
   _distMin: {x: -2, y: 1}
   _distMax: {x: 2, y: 5}
+  _asteroids:
+  - {fileID: 114246116088466194, guid: 7e1fb1a7d6b42184582d44aee14539f6, type: 2}
 --- !u!108 &443764210
 Light:
   m_ObjectHideFlags: 0
@@ -301,11 +332,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee40b61ec22469c842f6cbd8ac75ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _xMoveSpeed: 5
-  _yMoveSpeed: 5
-  _xMinBorder: 0.1
-  _xMaxBorder: 0.2
-  _boostMultiplier: 20
+  _xMoveSpeed: 0.5
+  _yMoveSpeed: 0.5
+  _xMin: -5
+  _xMax: 5
+  _boostMultiplier: 2
 --- !u!23 &1461238172
 MeshRenderer:
   m_ObjectHideFlags: 0
