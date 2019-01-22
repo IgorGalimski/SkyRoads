@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Game" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Models" t="Include">
+          <e p="Planet" t="Include">
+            <e p="Atmosphere.shader" t="Include" />
+            <e p="Planet.shader" t="Include" />
+            <e p="PlanetLow.shader" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Editor" t="Include">
+            <e p="FieldEditor.cs" t="Include" />
+          </e>
+          <e p="Extension.cs" t="Include" />
+          <e p="Managers" t="Include">
+            <e p="Asteroids" t="Include">
+              <e p="Asteroid.cs" t="Include" />
+              <e p="AsteroidsManager.cs" t="Include" />
+            </e>
+            <e p="Input.cs" t="Include" />
+          </e>
+          <e p="MessageSystem" t="Include">
+            <e p="Data" t="Include">
+              <e p="AxisData.cs" t="Include" />
+            </e>
+            <e p="MessageData.cs" t="Include" />
+            <e p="MessageSystemManager.cs" t="Include" />
+            <e p="MessageType.cs" t="Include" />
+          </e>
+          <e p="Player.cs" t="Include" />
+          <e p="SmoothFollow.cs" t="Include" />
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="Floor shader.shader" t="Include" />
+        </e>
+      </e>
+      <e p="Game.sln" t="IncludeFlat" />
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+    <e p="C:\Users\Igor\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Igor\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Game.1172529425.00" t="ExcludeRecursive" />
+  </component>
+</project>
