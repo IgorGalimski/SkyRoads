@@ -9,7 +9,12 @@ public class InputManager : MonoBehaviour
     private float _vecticalAxis;
     private float _horizontalAxis;
 
-    void Update()
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
+
+    private void Update()
     {
         _vecticalAxis = Input.GetAxis("Vertical");
         _horizontalAxis = Input.GetAxis("Horizontal");

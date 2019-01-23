@@ -51,8 +51,9 @@
             <e p="MessageType.cs" t="Include" />
           </e>
           <e p="SmoothFollow.cs" t="Include" />
-          <e p="Winows" t="Include">
+          <e p="Window" t="Include">
             <e p="LevelFailWindow.cs" t="Include" />
+            <e p="LevelStartWindow.cs" t="Include" />
           </e>
         </e>
         <e p="Shaders" t="Include">

@@ -25,9 +25,6 @@ public class AsteroidsManager : MonoBehaviour
 	[SerializeField]
 	private Asteroid[] _asteroids;
 
-	[SerializeField] 
-	private float _playerYDistanceTolerance = 0.0001f;
-
 	private List<Asteroid> _asteroidInstances = new List<Asteroid>();
 	
 	private List<Asteroid> _passedAsteroids = new List<Asteroid>();

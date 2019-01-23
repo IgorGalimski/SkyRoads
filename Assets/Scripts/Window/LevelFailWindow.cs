@@ -1,4 +1,5 @@
 ﻿using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,6 +91,6 @@ public class LevelFailWindow : MonoBehaviour
 
     private void OnReplayButtonClick()
     {
-        Debug.LogError("Replay");
+        MessageSystemManager.Invoke(MessageType.OnReplay);
     }
 }
