@@ -80,7 +80,7 @@ public class AsteroidsManager : MonoBehaviour
 
 	private Vector3 GetNewPosition()
 	{
-		float distanceX = Random.Range(_distMin.x, _distMax.x);
+		float distanceX = Random.Range(_distMin.x, _distMax.x) * Mathf.Sign(Random.Range(-1f, 1f));
 		float distanceY = Random.Range(_distMin.y, _distMax.y);
 
 		float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);

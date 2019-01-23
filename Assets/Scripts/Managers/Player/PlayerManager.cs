@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
     private float _boostMultiplier = 2f;
 
     private bool _boost;
+
+    private float _rotat;
     
     private void Awake()
     {
@@ -32,6 +34,16 @@ public class PlayerManager : MonoBehaviour
         transform.position += Vector3.up * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
+
+        /*if (_rotat > 0f)
+        {
+            Vector3 rotation = transform.rotation.eulerAngles;
+            rotation.y = 90 * _rotat;
+
+            transform.rotation = Quaternion.Euler(rotation);
+
+            _rotat -= Time.deltaTime;
+        }*/
     }
 
     private void OnDestroy()
@@ -43,12 +55,6 @@ public class PlayerManager : MonoBehaviour
     
     private void OnInputAxis(AxisData axisData)
     {       
-        Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.y = 90 * axisData.HorizontalAxis;
-        
-        transform.rotation = Quaternion.Euler(rotation);
-        
-
         Vector3 movementVector = axisData.HorizontalAxis > 0f ? Vector3.right : Vector3.left;
         transform.position += movementVector * Time.deltaTime * _xMoveSpeed;
 
@@ -77,5 +83,4 @@ public class PlayerManager : MonoBehaviour
             MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
         }
     }
-
 }
