@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : BaseSingletonManager
 {
     private const string BEST_SCORE_PREFS_KEY = "BestScore";
     
@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour
     private int _asteroidPassed;
 
     private int _playingTime;
-    
-    private void Awake()
+
+    protected override void Init()
     {
         MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-
-        StartGame();
+        
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
     }
 
     private void OnDestroy()
@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
         MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
+        
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
     }
     
     public int BestScore
@@ -69,6 +71,11 @@ public class GameManager : MonoBehaviour
     private void OnPlayerBoostStatusChange(PlayerBoostStatus playerBoostStatus)
     {
         _boost = playerBoostStatus.BoostStatus;
+    }
+
+    private void OnGameStart(IMessageData messageData)
+    {
+        
     }
 
     private void StartGame()

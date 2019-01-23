@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DefaultNamespace.Managers
 {
-    public class CountersManager : MonoBehaviour
+    public class CountersManager : BaseSingletonManager
     {
         private const string CURRENT_SCORE_FORMAT = "Score: {0}";
         private const string BEST_SCORE_FORMAT = "Best score: {0}";
@@ -20,7 +20,7 @@ namespace DefaultNamespace.Managers
         [SerializeField] 
         private TextMeshProUGUI _bestScore;
 
-        private void Awake()
+        protected override void Init()
         {
             if (_timePlaying != null)
             {

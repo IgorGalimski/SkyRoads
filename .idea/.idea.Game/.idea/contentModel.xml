@@ -13,27 +13,21 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Components" t="Include">
+            <e p="Asteroid.cs" t="Include" />
+          </e>
           <e p="Editor" t="Include">
             <e p="FieldEditor.cs" t="Include" />
           </e>
           <e p="Extension.cs" t="Include" />
           <e p="Managers" t="Include">
-            <e p="Asteroids" t="Include">
-              <e p="Asteroid.cs" t="Include" />
-              <e p="AsteroidsManager.cs" t="Include" />
-            </e>
-            <e p="Counters" t="Include">
-              <e p="CountersManager.cs" t="Include" />
-            </e>
-            <e p="Game" t="Include">
-              <e p="GameManager.cs" t="Include" />
-            </e>
-            <e p="Input" t="Include">
-              <e p="InputManager.cs" t="Include" />
-            </e>
-            <e p="Player" t="Include">
-              <e p="PlayerManager.cs" t="Include" />
-            </e>
+            <e p="AsteroidsManager.cs" t="Include" />
+            <e p="BaseSingletonManager.cs" t="Include" />
+            <e p="CountersManager.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="InputManager.cs" t="Include" />
+            <e p="LevelManager.cs" t="Include" />
+            <e p="PlayerManager.cs" t="Include" />
           </e>
           <e p="MessageSystem" t="Include">
             <e p="Data" t="Include">

@@ -91,6 +91,6 @@ public class LevelFailWindow : MonoBehaviour
 
     private void OnReplayButtonClick()
     {
-        MessageSystemManager.Invoke(MessageType.OnReplay);
+        MessageSystemManager.Invoke(MessageType.OnGameReplay);
     }
 }

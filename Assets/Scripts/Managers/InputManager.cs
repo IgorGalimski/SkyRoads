@@ -1,17 +1,16 @@
 using System;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : BaseSingletonManager
 {
     [SerializeField] 
     private float _tolerance = 0.001f;
 
     private float _vecticalAxis;
     private float _horizontalAxis;
-
-    private void Awake()
+    
+    protected override void Init()
     {
-        DontDestroyOnLoad(this);
     }
 
     private void Update()

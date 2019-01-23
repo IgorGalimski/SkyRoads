@@ -33,7 +33,7 @@ public class AsteroidsManager : MonoBehaviour
 
 	private int _asteroidsPassed;
 	
-	void Awake ()
+	private void Awake()
 	{
 		InstantiateAsteroids();
 		
@@ -53,6 +53,16 @@ public class AsteroidsManager : MonoBehaviour
 				asteroid.transform.position = GetNewPosition();
 			}
 		}
+	}
+
+	private void OnDestroy()
+	{
+		foreach (Asteroid asteroid in _asteroidInstances)
+		{
+			Destroy(asteroid);
+		}
+		
+		_asteroidInstances.Clear();
 	}
 
 	private void InstantiateAsteroids()
