@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
     }
 
     private void Update()
@@ -51,6 +52,7 @@ public class PlayerManager : MonoBehaviour
         MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
     }
     
     private void OnInputAxis(AxisData axisData)
@@ -82,5 +84,10 @@ public class PlayerManager : MonoBehaviour
             
             MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
         }
+    }
+
+    private void OnGameFail(IMessageData messageData)
+    {
+        _yMoveSpeed = 0f;
     }
 }

@@ -40,6 +40,7 @@
               <e p="AsteroidPassedData.cs" t="Include" />
               <e p="AxisData.cs" t="Include" />
               <e p="KeyData.cs" t="Include" />
+              <e p="LevelFailData.cs" t="Include" />
               <e p="PlayerBoostStatus.cs" t="Include" />
               <e p="PositionData.cs" t="Include" />
               <e p="ScoreData.cs" t="Include" />
@@ -50,6 +51,9 @@
             <e p="MessageType.cs" t="Include" />
           </e>
           <e p="SmoothFollow.cs" t="Include" />
+          <e p="Winows" t="Include">
+            <e p="LevelFailWindow.cs" t="Include" />
+          </e>
         </e>
         <e p="Shaders" t="Include">
           <e p="Floor shader.shader" t="Include" />
