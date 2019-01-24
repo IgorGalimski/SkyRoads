@@ -1138,6 +1138,11 @@ Prefab:
       propertyPath: _target
       value: 
       objectReference: {fileID: 1592271317}
+    - target: {fileID: 114827892028974156, guid: 4319d9e04010d3e4e872da9c074a632f,
+        type: 2}
+      propertyPath: _smoothTime
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4319d9e04010d3e4e872da9c074a632f, type: 2}
   m_IsPrefabAsset: 0

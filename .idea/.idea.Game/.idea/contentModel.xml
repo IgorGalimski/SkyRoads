@@ -48,7 +48,8 @@
             <e p="MessageType.cs" t="Include" />
             <e p="MultitypeDelegate.cs" t="Include" />
           </e>
-          <e p="Other" t="Include">
+          <e p="UI" t="Include">
+            <e p="MovingMeshRenderer.cs" t="Include" />
             <e p="SmoothDampFollow.cs" t="Include" />
             <e p="SmoothFollow.cs" t="Include" />
           </e>
