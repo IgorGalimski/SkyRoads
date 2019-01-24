@@ -55,8 +55,9 @@ MonoBehaviour:
   _positionType: 0
   _minXPosition: -3
   _maxXPosition: 3
-  _distMin: {x: 3, y: 10}
-  _distMax: {x: 5, y: 10}
+  _distYMin: 20
+  _distYMax: 30
+  _distYStep: -1
   _offset: {x: 0, y: 0, z: 0}
   _startPosition: {x: 0, y: 30, z: -1}
   _initCount: 10
@@ -73,3 +74,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9057b17b945e74f9e1da6b9bcf6566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stepYDistanceInterval: 10

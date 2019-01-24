@@ -24,10 +24,13 @@ public class ObjectPool : MonoBehaviour
     private float _maxXPosition;
 
     [SerializeField]
-    private Vector2 _distMin;
+    private float _distYMin;
 	
     [SerializeField]
-    private Vector2 _distMax;
+    private float _distYMax;
+
+    [SerializeField] 
+    private float _distYStep;
 
     [SerializeField] 
     private Vector3 _offset;
@@ -47,6 +50,8 @@ public class ObjectPool : MonoBehaviour
 
     public event Action<GameObject> OnSetNewPosition;
 
+    private float _distY;
+
     public List<GameObject> Instances
     {
         get
@@ -55,8 +60,15 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    public void StepYDistance()
+    {
+        _distY = Mathf.Clamp(_distY + _distYStep, _distYMin, _distYMax);
+    }
+
     private void Awake()
     {
+        _distY = _distYMax;
+        
         Init();
     }
     
@@ -110,11 +122,8 @@ public class ObjectPool : MonoBehaviour
             {
                 case PositionType.RandomDistance:
                 {
-                    float distanceX = Random.Range(_minXPosition, _maxXPosition);
-                    float distanceY = Random.Range(_distMin.y, _distMax.y);
-
-                    float x = distanceX;
-                    float y = distanceY + _previousPosition.y;
+                    float x = Random.Range(_minXPosition, _maxXPosition);
+                    float y = _distY + _previousPosition.y;
 
                     newPosition = new Vector3(x, y, _previousPosition.z);
 

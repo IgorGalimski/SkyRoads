@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(ObjectPool))]
 public class AsteroidsManager : MonoBehaviour
 {
+	[SerializeField] 
+	private int _stepYDistanceInterval = 10;
+	
 	private List<Asteroid> _passedAsteroids = new List<Asteroid>();
 
 	private int _asteroidsPassed;
@@ -17,11 +20,15 @@ public class AsteroidsManager : MonoBehaviour
 		_objectPool.OnSetNewPosition += OnSetNewPosition;
 		
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
+		MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
 	}
 
 	private void OnDestroy()
 	{
 		_objectPool.OnSetNewPosition -= OnSetNewPosition;
+		
+		MessageSystemManager.RemoveListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
+		MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
 	}
 
 	private void OnSetNewPosition(GameObject instance)
@@ -67,6 +74,14 @@ public class AsteroidsManager : MonoBehaviour
 					MessageSystemManager.Invoke(MessageType.OnAsteroidPassed, new AsteroidPassedData(_asteroidsPassed));
 				}
 			}
+		}
+	}
+
+	private void OnPlayingTimeUpdate(TimeData timeData)
+	{
+		if (timeData.Seconds != 0 && (timeData.Seconds % _stepYDistanceInterval) == 0)
+		{
+			_objectPool.StepYDistance();
 		}
 	}
 }
