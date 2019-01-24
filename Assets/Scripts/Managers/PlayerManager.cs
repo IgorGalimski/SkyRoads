@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
     }
     
     private void OnInputAxis(AxisData axisData)
-    {       
+    {   
         Vector3 movementVector = axisData.HorizontalAxis > 0f ? Vector3.right : Vector3.left;
         transform.position += movementVector * Time.deltaTime * _xMoveSpeed;
 

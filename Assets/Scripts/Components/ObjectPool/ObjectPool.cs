@@ -116,7 +116,7 @@ public class ObjectPool : MonoBehaviour
                     float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);
                     float y = distanceY + _previousPosition.y;
 
-                    newPosition = new Vector3(x, y, 0);
+                    newPosition = new Vector3(x, y, _previousPosition.z);
 
                     break;
                 }

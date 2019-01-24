@@ -58,7 +58,7 @@ MonoBehaviour:
   _distMin: {x: 3, y: 10}
   _distMax: {x: 5, y: 10}
   _offset: {x: 0, y: 0, z: 0}
-  _startPosition: {x: 0, y: 30, z: 0}
+  _startPosition: {x: 0, y: 30, z: -1}
   _initCount: 10
   _prefabs:
   - {fileID: 114152862590566864, guid: 7e1fb1a7d6b42184582d44aee14539f6, type: 2}

@@ -58,6 +58,6 @@ MonoBehaviour:
   _distMax: {x: 0, y: 0}
   _offset: {x: 0, y: 10, z: 0}
   _startPosition: {x: 0, y: -20, z: 0}
-  _initCount: 10
+  _initCount: 15
   _prefabs:
   - {fileID: 114062509819273188, guid: e53eb3f0bb40d454db591d0057a33f47, type: 2}
