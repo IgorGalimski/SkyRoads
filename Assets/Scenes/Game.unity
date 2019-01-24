@@ -1062,6 +1062,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
+        type: 2}
+      propertyPath: _distMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
+        type: 2}
+      propertyPath: _distMax.x
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9, type: 2}
   m_IsPrefabAsset: 0
@@ -1743,8 +1753,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0880c2d1583b0a146985baad05098107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 3
-  height: -2
-  heightDamping: 3
-  rotationDamping: 2
-  target: {fileID: 1592271317}
+  _distance: 3
+  _distanceBoost: 1.5
+  _height: -3
+  _heightBoost: 10
+  _heightDamping: 2
+  _rotationDamping: 3
+  _target: {fileID: 1592271317}
+  _playerBoost: 0

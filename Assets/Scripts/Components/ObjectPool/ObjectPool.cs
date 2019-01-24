@@ -110,10 +110,10 @@ public class ObjectPool : MonoBehaviour
             {
                 case PositionType.RandomDistance:
                 {
-                    float distanceX = Random.Range(_distMin.x, _distMax.x) * Mathf.Sign(Random.Range(-1f, 1f));
+                    float distanceX = Random.Range(_minXPosition, _maxXPosition);
                     float distanceY = Random.Range(_distMin.y, _distMax.y);
 
-                    float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);
+                    float x = distanceX;
                     float y = distanceY + _previousPosition.y;
 
                     newPosition = new Vector3(x, y, _previousPosition.z);
