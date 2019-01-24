@@ -5,6 +5,7 @@ namespace DefaultNamespace.Managers
 {
     public class CountersManager : MonoBehaviour
     {
+        private const string DEFAULT_TEXT_VALUE = "-";
         private const string CURRENT_SCORE_FORMAT = "Score: {0}";
         private const string BEST_SCORE_FORMAT = "Best score: {0}";
         
@@ -25,16 +26,23 @@ namespace DefaultNamespace.Managers
             if (_timePlaying != null)
             {
                 MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
+
+                SetDefaultValue(_timePlaying);
             }
 
             if (_asteroids != null)
             {
                 MessageSystemManager.AddListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
+                
+                SetDefaultValue(_asteroids);
             }
 
             if (_currentScore != null && _bestScore != null)
             {
                 MessageSystemManager.AddListener<ScoreData>(MessageType.OnScoreUpdate, OnScoreUpdate);
+                
+                SetDefaultValue(_currentScore);
+                SetDefaultValue(_bestScore);
             }
         }
 
@@ -54,6 +62,11 @@ namespace DefaultNamespace.Managers
             {
                 MessageSystemManager.RemoveListener<ScoreData>(MessageType.OnScoreUpdate, OnScoreUpdate);
             }
+        }
+
+        private void SetDefaultValue(TextMeshProUGUI textMeshProUgui)
+        {
+            textMeshProUgui.text = DEFAULT_TEXT_VALUE;
         }
 
         private void OnPlayingTimeUpdate(TimeData timeData)
