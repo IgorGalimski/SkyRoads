@@ -19,8 +19,6 @@ public class LevelStartWindow : MonoBehaviour
 
     private void OnKeyDown(KeyData keyData)
     {
-        Debug.LogError("KeyDown");
-        
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
 
         if (_levelStart != null)

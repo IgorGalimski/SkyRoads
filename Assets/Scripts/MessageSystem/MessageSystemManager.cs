@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -6,26 +7,29 @@ public static class MessageSystemManager
 {
     public delegate void EventDelegate<in T> (T e) where T : IMessageData;
 
-    private delegate void EventDelegate (IMessageData e);
+    public delegate void EventDelegate ();
     
-    private static Dictionary<MessageType, EventDelegate> _actions = new Dictionary<MessageType, EventDelegate>();
+    private static Dictionary<MessageType, Delegate> _actions = new Dictionary<MessageType, Delegate>();
     public static void AddListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
     {
         if (action == null)
         {
             Debug.LogWarning("Action is null");
         }
-        
-        EventDelegate currentEventDelegate = (e) => action((T)e);
 
         if (!_actions.ContainsKey(messageType))
         {
-            _actions.Add(messageType, currentEventDelegate);
+            _actions.Add(messageType, action);
             
             return;
         }
 
-        _actions[messageType] += currentEventDelegate;
+        _actions[messageType] = Delegate.Combine(_actions[messageType], action);
+    }
+
+    public static void AddListener(MessageType messageType, EventDelegate action)
+    {
+        AddListener<IMessageData>(messageType, (e) => action());
     }
 
     public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
@@ -39,10 +43,13 @@ public static class MessageSystemManager
         {
             return;
         }
-        
-        EventDelegate currentEventDelegate = (e) => action((T)e);
-        
-        _actions[messageType] -= currentEventDelegate;
+
+        _actions[messageType] = Delegate.Remove(_actions[messageType], action);
+    }
+    
+    public static void RemoveListener(MessageType messageType, EventDelegate action)
+    {
+        RemoveListener<IMessageData>(messageType, (e) => action());
     }
 
     public static void Invoke(MessageType messageType, IMessageData messageData = null)
@@ -54,7 +61,9 @@ public static class MessageSystemManager
             return;
         }
 
-        _actions[messageType].Invoke(messageData);
+        foreach (Delegate del in _actions[messageType].GetInvocationList())
+        {
+            del.DynamicInvoke(messageData);
+        }
     }
-    
 }

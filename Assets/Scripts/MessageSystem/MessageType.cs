@@ -11,5 +11,6 @@
     OnPlayerBoostStatusChange,
     OnGameStart,
     OnGameFail,
-    OnGameReplay
+    OnGameReplay,
+    OnGameLoad
 }

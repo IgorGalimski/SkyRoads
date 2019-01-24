@@ -24,10 +24,10 @@ public class PlayerManager : MonoBehaviour
     
     private void Awake()
     {
+        MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
     }
 
     private void Update()
@@ -49,10 +49,10 @@ public class PlayerManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        MessageSystemManager.RemoveListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
     }
     
     private void OnInputAxis(AxisData axisData)
@@ -86,7 +86,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnGameFail(IMessageData messageData)
+    private void OnGameFail(LevelFailData levelFailData)
     {
         _yMoveSpeed = 0f;
     }

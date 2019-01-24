@@ -40,15 +40,12 @@ public class LevelManager : BaseSingletonManager
 
     private void OnGameStart(IMessageData messageData)
     {
-        Debug.LogError("STARt");
-        
         StartCoroutine(LoadScene(1));
     }
 
     private void OnGameReplay(IMessageData messageData)
     {
-        Debug.LogError("Replay");
-        //StartCoroutine(LoadScene(1));
+        StartCoroutine(LoadScene(1));
     }
 
     private IEnumerator LoadScene(int sceneIndex)
@@ -58,6 +55,8 @@ public class LevelManager : BaseSingletonManager
         SceneManager.LoadScene(sceneIndex);
 
         yield return StartCoroutine(FadeOut());
+        
+        MessageSystemManager.Invoke(MessageType.OnGameLoad);
     }
 
     private IEnumerator FadeIn()
