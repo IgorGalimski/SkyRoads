@@ -26,7 +26,7 @@ public class LevelFailWindow : MonoBehaviour
     
     private void Awake()
     {
-        //MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
 
         if (_replayButton != null)
         {

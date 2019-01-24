@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
     
     private void Awake()
     {
-        //MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);

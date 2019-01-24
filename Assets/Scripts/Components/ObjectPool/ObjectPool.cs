@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
 public class ObjectPool : MonoBehaviour
@@ -30,6 +31,9 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] 
     private Vector3 _offset;
+
+    [SerializeField] 
+    private Vector3 _startPosition = Vector3.zero;
     
     [SerializeField] 
     private int _initCount;
@@ -39,7 +43,9 @@ public class ObjectPool : MonoBehaviour
     
     private List<GameObject> _instances = new List<GameObject>();
     
-    private Vector3 _previousPosition = Vector3.zero;
+    private Vector3 _previousPosition;
+    
+    private Vector3 _screenCenterBottom = new Vector3(0.5f, 0f, 0f);
 
     public event Action<GameObject> OnSetNewPosition;
 
@@ -58,12 +64,13 @@ public class ObjectPool : MonoBehaviour
     
     private void Update()
     {
-        Vector3 screenBottomWorldCoordinate = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        Vector3 screenBottomWorldCoordinate = Camera.main.ViewportToWorldPoint(_screenCenterBottom);
 		
         foreach (GameObject instance in _instances)
         {
-            if (instance.transform.position.y < screenBottomWorldCoordinate.y)
-            {
+            //if ((instance.transform.position.y + instance.transform.localScale.y*2) < screenBottomWorldCoordinate.y)
+            if(!IsVisible(instance))
+            {                
                 if (OnSetNewPosition != null)
                 {
                     OnSetNewPosition(instance);
@@ -72,6 +79,19 @@ public class ObjectPool : MonoBehaviour
                 instance.transform.position = GetNewPosition();
             }
         }
+    }
+
+    private bool IsVisible(GameObject toCheck)
+    {
+        Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(toCheck.transform.position - toCheck.transform.localScale);
+ 
+        //Is in FOV
+        if (pointOnScreen.y < -1)
+        {
+            return false;
+        }
+
+        return true;
     }
     
     private void Init()
@@ -82,6 +102,8 @@ public class ObjectPool : MonoBehaviour
 			
             return;
         }
+
+        _previousPosition = _startPosition;
 		
         for (int i = 0; i < _initCount; i++)
         {

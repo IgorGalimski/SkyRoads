@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public static class MessageSystemManager
 
     public delegate void EventDelegate ();
     
-    private static Dictionary<MessageType, Delegate> _actions = new Dictionary<MessageType, Delegate>();
+    private static Dictionary<MessageType, MultitypeDelegate> _multitypeDelegates = new Dictionary<MessageType, MultitypeDelegate>();
     public static void AddListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
     {
         if (action == null)
@@ -17,14 +16,12 @@ public static class MessageSystemManager
             Debug.LogWarning("Action is null");
         }
 
-        if (!_actions.ContainsKey(messageType))
+        if (!_multitypeDelegates.ContainsKey(messageType))
         {
-            _actions.Add(messageType, action);
-            
-            return;
+            _multitypeDelegates.Add(messageType, new MultitypeDelegate());
         }
-
-        _actions[messageType] = Delegate.Combine(_actions[messageType], action);
+        
+        _multitypeDelegates[messageType].AddDelegate(action);
     }
 
     public static void AddListener(MessageType messageType, EventDelegate action)
@@ -39,12 +36,12 @@ public static class MessageSystemManager
             Debug.LogWarning("Action is null");
         }
 
-        if (!_actions.ContainsKey(messageType))
+        if (!_multitypeDelegates.ContainsKey(messageType))
         {
             return;
         }
-
-        _actions[messageType] = Delegate.Remove(_actions[messageType], action);
+        
+        _multitypeDelegates[messageType].RemoveDelegate(action);
     }
     
     public static void RemoveListener(MessageType messageType, EventDelegate action)
@@ -54,16 +51,11 @@ public static class MessageSystemManager
 
     public static void Invoke(MessageType messageType, IMessageData messageData = null)
     {
-        if (!_actions.ContainsKey(messageType))
+        if (!_multitypeDelegates.ContainsKey(messageType))
         {
-            Debug.LogWarning(string.Format("Action doesn't contain key:{0}", messageType));
-            
             return;
         }
-
-        foreach (Delegate del in _actions[messageType].GetInvocationList())
-        {
-            del.DynamicInvoke(messageData);
-        }
+        
+        _multitypeDelegates[messageType].Invoke(messageData);
     }
 }
