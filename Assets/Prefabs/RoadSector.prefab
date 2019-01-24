@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4214015644377704}
   - component: {fileID: 33662752641945170}
   - component: {fileID: 23990024536225848}
-  - component: {fileID: 64014764851412762}
+  - component: {fileID: 114062509819273188}
   m_Layer: 0
   m_Name: RoadSector
   m_TagString: Untagged
@@ -84,17 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1031260387500882}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64014764851412762
-MeshCollider:
+--- !u!114 &114062509819273188
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1031260387500882}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7081067ea044c0e80727156385a341a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boundsMutliplier: 1

@@ -748,6 +748,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
+        type: 2}
+      propertyPath: _pointGameObject
+      value: 
+      objectReference: {fileID: 2111114573}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9, type: 2}
   m_IsPrefabAsset: 0
@@ -1139,6 +1144,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114569264301210398, guid: 73aaba7f14e29114f97f51caa99fcd37,
+        type: 2}
+      propertyPath: _pointGameObject
+      value: 
+      objectReference: {fileID: 2111114573}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73aaba7f14e29114f97f51caa99fcd37, type: 2}
   m_IsPrefabAsset: 0
@@ -1391,3 +1401,8 @@ MonoBehaviour:
   heightDamping: 2
   rotationDamping: 2
   target: {fileID: 1592271317}
+--- !u!1 &2111114573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1437760891543858, guid: e781a5a10acf71747be82dd5fc05f089,
+    type: 2}
+  m_PrefabInternal: {fileID: 1592271316}

@@ -15,7 +15,10 @@
         <e p="Scripts" t="Include">
           <e p="Components" t="Include">
             <e p="Asteroid.cs" t="Include" />
-            <e p="ObjectPool.cs" t="Include" />
+            <e p="ObjectPool" t="Include">
+              <e p="ObjectPool.cs" t="Include" />
+              <e p="PoolableObject.cs" t="Include" />
+            </e>
           </e>
           <e p="Editor" t="Include">
             <e p="FieldEditor.cs" t="Include" />
@@ -44,6 +47,7 @@
             <e p="MessageData.cs" t="Include" />
             <e p="MessageSystemManager.cs" t="Include" />
             <e p="MessageType.cs" t="Include" />
+            <e p="MultitypeDelegate.cs" t="Include" />
           </e>
           <e p="SmoothFollow.cs" t="Include" />
           <e p="Window" t="Include">

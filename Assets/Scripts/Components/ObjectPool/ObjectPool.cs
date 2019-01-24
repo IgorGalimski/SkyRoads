@@ -35,17 +35,15 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] 
     private Vector3 _startPosition = Vector3.zero;
     
-    [SerializeField] 
+    [SerializeField] [Range(1f, 100f)]
     private int _initCount;
 
     [SerializeField] 
-    private GameObject[] _prefabs;
+    private PoolableObject[] _prefabs;
     
-    private List<GameObject> _instances = new List<GameObject>();
+    private List<PoolableObject> _instances = new List<PoolableObject>();
     
-    private Vector3 _previousPosition;
-    
-    private Vector3 _screenCenterBottom = new Vector3(0.5f, 0f, 0f);
+    private Vector3 _previousPosition = Vector3.negativeInfinity;
 
     public event Action<GameObject> OnSetNewPosition;
 
@@ -53,7 +51,7 @@ public class ObjectPool : MonoBehaviour
     {
         get
         {
-            return _instances;
+            return _instances.Select(item => item.gameObject).ToList();
         }
     }
 
@@ -64,34 +62,20 @@ public class ObjectPool : MonoBehaviour
     
     private void Update()
     {
-        Vector3 screenBottomWorldCoordinate = Camera.main.ViewportToWorldPoint(_screenCenterBottom);
-		
-        foreach (GameObject instance in _instances)
+        Vector2 screenBottomPosition = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        
+        foreach (PoolableObject poolableObject in _instances)
         {
-            //if ((instance.transform.position.y + instance.transform.localScale.y*2) < screenBottomWorldCoordinate.y)
-            if(!IsVisible(instance))
+            if (poolableObject.GetTopBorder().y < screenBottomPosition.y)
             {                
                 if (OnSetNewPosition != null)
                 {
-                    OnSetNewPosition(instance);
+                    OnSetNewPosition(poolableObject.gameObject);
                 }
 				
-                instance.transform.position = GetNewPosition();
+                poolableObject.transform.position = GetNewPosition();
             }
         }
-    }
-
-    private bool IsVisible(GameObject toCheck)
-    {
-        Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(toCheck.transform.position - toCheck.transform.localScale);
- 
-        //Is in FOV
-        if (pointOnScreen.y < -1)
-        {
-            return false;
-        }
-
-        return true;
     }
     
     private void Init()
@@ -107,11 +91,11 @@ public class ObjectPool : MonoBehaviour
 		
         for (int i = 0; i < _initCount; i++)
         {
-            GameObject prefab = _prefabs[Random.Range(0, _prefabs.Length - 1)];
+            PoolableObject prefab = _prefabs[Random.Range(0, _prefabs.Length - 1)];
 
-            GameObject instance = Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
+            PoolableObject instance = Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
             instance.name = string.Concat(prefab.name, " ", i);
-			
+
             _instances.Add(instance);
         }
     }
@@ -119,30 +103,37 @@ public class ObjectPool : MonoBehaviour
     private Vector3 GetNewPosition()
     {
         Vector3 newPosition = Vector3.zero;
-        
-        switch (_positionType)
+
+        if (_previousPosition != Vector3.negativeInfinity)
         {
-            case PositionType.RandomDistance:
+            switch (_positionType)
             {
-                float distanceX = Random.Range(_distMin.x, _distMax.x) * Mathf.Sign(Random.Range(-1f, 1f));
-                float distanceY = Random.Range(_distMin.y, _distMax.y);
+                case PositionType.RandomDistance:
+                {
+                    float distanceX = Random.Range(_distMin.x, _distMax.x) * Mathf.Sign(Random.Range(-1f, 1f));
+                    float distanceY = Random.Range(_distMin.y, _distMax.y);
 
-                float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);
-                float y = distanceY + _previousPosition.y;
-		
-                newPosition = new Vector3(x, y, 0);
+                    float x = Mathf.Clamp(distanceX + _previousPosition.x, _minXPosition, _maxXPosition);
+                    float y = distanceY + _previousPosition.y;
 
-                break;
-            }
+                    newPosition = new Vector3(x, y, 0);
 
-            case PositionType.Offset:
-            {
-                newPosition = _previousPosition + _offset;
-                
-                break;
+                    break;
+                }
+
+                case PositionType.Offset:
+                {
+                    newPosition = _previousPosition + _offset;
+
+                    break;
+                }
             }
         }
-        
+        else
+        {
+            newPosition = _startPosition;
+        }
+
         _previousPosition = newPosition;
 
         return newPosition;
@@ -150,7 +141,7 @@ public class ObjectPool : MonoBehaviour
     
     private void OnDestroy()
     {
-        foreach (GameObject instance in _instances)
+        foreach (PoolableObject instance in _instances)
         {
             Destroy(instance);
         }

@@ -14,17 +14,17 @@ public class AsteroidsManager : MonoBehaviour
 	private void Awake()
 	{
 		_objectPool = GetComponent<ObjectPool>();
-		_objectPool.OnSetNewPosition += OnOnSetNewPosition;
+		_objectPool.OnSetNewPosition += OnSetNewPosition;
 		
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 	}
 
 	private void OnDestroy()
 	{
-		_objectPool.OnSetNewPosition -= OnOnSetNewPosition;
+		_objectPool.OnSetNewPosition -= OnSetNewPosition;
 	}
 
-	private void OnOnSetNewPosition(GameObject instance)
+	private void OnSetNewPosition(GameObject instance)
 	{
 		Asteroid asteroid = instance.GetComponent<Asteroid>();
 		if (asteroid != null)
