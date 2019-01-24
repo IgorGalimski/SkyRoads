@@ -15,6 +15,7 @@
         <e p="Scripts" t="Include">
           <e p="Components" t="Include">
             <e p="Asteroid.cs" t="Include" />
+            <e p="ObjectPool.cs" t="Include" />
           </e>
           <e p="Editor" t="Include">
             <e p="FieldEditor.cs" t="Include" />

@@ -23,8 +23,8 @@ public class GameManager : BaseSingletonManager
         MessageSystemManager.AddListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-        
         MessageSystemManager.AddListener(MessageType.OnGameLoad, OnGameLoad);
+        MessageSystemManager.AddListener(MessageType.OnGameFail, OnGameFail);
     }
 
     private void OnDestroy()
@@ -33,8 +33,8 @@ public class GameManager : BaseSingletonManager
         MessageSystemManager.RemoveListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-        
         MessageSystemManager.RemoveListener(MessageType.OnGameLoad, OnGameLoad);
+        MessageSystemManager.RemoveListener(MessageType.OnGameFail, OnGameFail);
     }
     
     public int BestScore
@@ -79,6 +79,11 @@ public class GameManager : BaseSingletonManager
         _score = 0;
         
         InvokeRepeating("Timer", 0.0f, 1.0f);
+    }
+
+    private void OnGameFail()
+    {
+        CancelInvoke("Timer");
     }
 
     private void Timer()
