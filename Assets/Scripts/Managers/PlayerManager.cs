@@ -15,6 +15,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float _xMax = 5f;
 
+    [SerializeField] 
+    private float _maxYDeflectionAngle = 60f;
+
     [SerializeField]
     private float _boostMultiplier = 2f;
 
@@ -35,16 +38,6 @@ public class PlayerManager : MonoBehaviour
         transform.position += Vector3.up * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
-
-        /*if (_rotat > 0f)
-        {
-            Vector3 rotation = transform.rotation.eulerAngles;
-            rotation.y = 90 * _rotat;
-
-            transform.rotation = Quaternion.Euler(rotation);
-
-            _rotat -= Time.deltaTime;
-        }*/
     }
 
     private void OnDestroy()
@@ -63,6 +56,11 @@ public class PlayerManager : MonoBehaviour
         position.x = Mathf.Clamp(position.x, _xMin, _xMax);
         
         transform.position = position;
+
+        Vector3 rotation = transform.rotation.eulerAngles;
+        rotation.y = _maxYDeflectionAngle * axisData.HorizontalAxis;
+
+        transform.rotation = Quaternion.Euler(rotation);
     }
 
     private void OnKeyDown(KeyData keyData)

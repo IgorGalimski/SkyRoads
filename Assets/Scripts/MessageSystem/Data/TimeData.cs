@@ -1,6 +1,6 @@
 public class TimeData : IMessageData
 {
-    private const string TIME_PLAYING_FORMAT = "{0}:{1}:{2}";
+    private const string TIME_PLAYING_FORMAT = "{0:D2}:{1:D2}:{2:D2}";
     
     public int Seconds { get; private set; }
 

@@ -16,9 +16,6 @@ public class SmoothFollow : MonoBehaviour
     private float _heightDamping = 2.0f;
     
     [SerializeField]
-    private float _rotationDamping = 3.0f;
-    
-    [SerializeField]
     private Transform _target;
 
     private float Distance
@@ -46,26 +43,17 @@ public class SmoothFollow : MonoBehaviour
             return;
         }
 
-        // Calculate the current rotation angles
-        float wantedRotationAngle = _target.eulerAngles.y;
         float wantedHeight = _target.position.y + Height;
 
-        float currentRotationAngle = transform.eulerAngles.y;
         float currentHeight = transform.position.y;
-
-        // Damp the rotation around the y-axis
-        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, _rotationDamping * Time.deltaTime);
 
         // Damp the height
         currentHeight = Mathf.Lerp(currentHeight, wantedHeight, _heightDamping * Time.deltaTime);
 
-        // Convert the angle into a rotation
-        Quaternion currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
-
         // Set the position of the camera on the x-z plane to:
         // distance meters behind the target
         var pos = transform.position;
-        pos = _target.position - currentRotation * Vector3.forward * Distance;
+        pos = _target.position -  Vector3.forward * Distance;
         pos.y = currentHeight;
         transform.position = pos;
 
