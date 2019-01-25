@@ -18,7 +18,7 @@
             <e p="Asteroid.cs" t="Include" />
           </e>
           <e p="Editor" t="Include">
-            <e p="FieldEditor.cs" t="Include" />
+            <e p="ObjectPoolEditor.cs" t="Include" />
           </e>
           <e p="Extension.cs" t="Include" />
           <e p="Follow" t="Include">

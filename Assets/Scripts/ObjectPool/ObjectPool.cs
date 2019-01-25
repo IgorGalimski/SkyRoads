@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class ObjectPool : MonoBehaviour
 {
-    private enum PositionType
+    public enum PositionType
     {
         RandomDistance,
         Offset
@@ -16,6 +16,10 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] 
     private PositionType _positionType;
+    public PositionType positionType
+    {
+        get { return _positionType; }
+    }
 
     [SerializeField] 
     private List<float> _xValues;
