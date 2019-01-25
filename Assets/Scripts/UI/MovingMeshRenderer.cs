@@ -41,7 +41,8 @@ public class MovingMeshRenderer : MonoBehaviour
         {
             Array movingDirections = Enum.GetValues(typeof(MovingDirection));
 
-            _movingDirection = (MovingDirection)(movingDirections.GetValue(Random.Range(0, movingDirections.Length)));
+            //_movingDirection = (MovingDirection)(movingDirections.GetValue(Random.Range(0, movingDirections.Length)));
+            _movingDirection = movingDirections.GetRandomElement<MovingDirection>();
         }
     }
 

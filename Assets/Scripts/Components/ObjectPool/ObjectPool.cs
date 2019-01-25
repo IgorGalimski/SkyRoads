@@ -17,11 +17,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] 
     private PositionType _positionType;
 
-    [SerializeField]
-    private float _minXPosition;
-    
-    [SerializeField]
-    private float _maxXPosition;
+    [SerializeField] 
+    private List<float> _xValues;
 
     [SerializeField]
     private float _distYMin;
@@ -122,7 +119,10 @@ public class ObjectPool : MonoBehaviour
             {
                 case PositionType.RandomDistance:
                 {
-                    float x = Random.Range(_minXPosition, _maxXPosition);
+                    float x = _xValues
+                        .Where(item => !Mathf.Approximately(item, _previousPosition.x))
+                        .ToArray()
+                        .GetRandomElement<float>();
                     float y = _distY + _previousPosition.y;
 
                     newPosition = new Vector3(x, y, _previousPosition.z);
