@@ -17,6 +17,8 @@ public class GameManager : BaseSingletonManager
 
     private int _playingTime;
 
+    private bool _record;
+
     protected override void Init()
     {
         MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
@@ -37,7 +39,7 @@ public class GameManager : BaseSingletonManager
         MessageSystemManager.RemoveListener(MessageType.OnGameFail, OnGameFail);
     }
     
-    public int BestScore
+    private int BestScore
     {
         get { return PlayerPrefs.GetInt(BEST_SCORE_PREFS_KEY); }
         set { PlayerPrefs.SetInt(BEST_SCORE_PREFS_KEY, value); }
@@ -48,10 +50,8 @@ public class GameManager : BaseSingletonManager
         TimeData timeData = new TimeData(_playingTime);
         AsteroidPassedData asteroidPassedData = new AsteroidPassedData(_asteroidPassed);
         ScoreData scoreData = new ScoreData(_score, BestScore);
-        
-        bool record = BestScore == _score;
 
-        LevelFailData levelFailData = new LevelFailData(timeData, asteroidPassedData, scoreData, record);
+        LevelFailData levelFailData = new LevelFailData(timeData, asteroidPassedData, scoreData, _record);
         
         MessageSystemManager.Invoke(MessageType.OnGameFail, levelFailData);
     }
@@ -77,6 +77,7 @@ public class GameManager : BaseSingletonManager
     {
         _seconds = 0;
         _score = 0;
+        _record = false;
         
         InvokeRepeating("Timer", 0.0f, 1.0f);
     }
@@ -104,6 +105,8 @@ public class GameManager : BaseSingletonManager
         if (BestScore < _score)
         {
             BestScore = _score;
+
+            _record = true;
         }
         
         MessageSystemManager.Invoke(MessageType.OnScoreUpdate, new ScoreData(_score, BestScore));

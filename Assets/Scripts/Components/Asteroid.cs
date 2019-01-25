@@ -16,6 +16,6 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
+        MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
     }
 }

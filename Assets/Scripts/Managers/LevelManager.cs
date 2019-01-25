@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,12 +15,12 @@ public class LevelManager : BaseSingletonManager
         nullTexture.SetPixel(0,0, Color.black);
         nullTexture.Apply();
 
-        _colorTexture = (Texture)nullTexture;
+        _colorTexture = nullTexture;
 
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameReplay, OnGameReplay);
-        
-        StartCoroutine(FadeOut());
+        MessageSystemManager.AddListener(MessageType.OnGameStart, OnGameStart);
+        MessageSystemManager.AddListener(MessageType.OnGameReplay, OnGameReplay);
+
+        StartSingleCoroutine(FadeOut());
     }
     
     private void OnGUI() 
@@ -32,18 +32,25 @@ public class LevelManager : BaseSingletonManager
 
     private void OnDestroy()
     {
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameReplay, OnGameReplay);
+        MessageSystemManager.RemoveListener(MessageType.OnGameStart, OnGameStart);
+        MessageSystemManager.RemoveListener(MessageType.OnGameReplay, OnGameReplay);
     }
 
-    private void OnGameStart(IMessageData messageData)
+    private void OnGameStart()
     {
-        StartCoroutine(LoadScene(1));
+        StartSingleCoroutine(LoadScene(1));
     }
 
-    private void OnGameReplay(IMessageData messageData)
+    private void OnGameReplay()
     {
-        StartCoroutine(LoadScene(1));
+        StartSingleCoroutine(LoadScene(1));
+    }
+    
+    private void StartSingleCoroutine(IEnumerator enumerator)
+    {
+        StopAllCoroutines();
+
+        StartCoroutine(enumerator);
     }
 
     private IEnumerator LoadScene(int sceneIndex)

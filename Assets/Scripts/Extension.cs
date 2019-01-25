@@ -5,7 +5,7 @@ public static class Extension
 {
     public static T GetRandomElement<T>(this IList list)
     {
-        if (list == null)
+        if (list == null || list.Count == 0)
         {
             return default(T);
         }
