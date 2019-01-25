@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : BaseSingletonManager
 {
-    private float _alpha;
-    
     private Texture _colorTexture;
     
     private Color _fadeColor = Color.black;
@@ -19,10 +17,10 @@ public class LevelManager : BaseSingletonManager
 
         _colorTexture = (Texture)nullTexture;
 
-        _fadeColor.a = 0f;
-        
         MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
         MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameReplay, OnGameReplay);
+        
+        StartCoroutine(FadeOut());
     }
     
     private void OnGUI() 
@@ -61,11 +59,9 @@ public class LevelManager : BaseSingletonManager
 
     private IEnumerator FadeIn()
     {
-        while (_alpha < 1f)
+        while (_fadeColor.a < 1f)
         {
-            _alpha += Time.deltaTime;
-
-            _fadeColor.a = _alpha;
+            _fadeColor.a += Time.deltaTime;
 
             yield return null;
         }
@@ -73,11 +69,9 @@ public class LevelManager : BaseSingletonManager
 
     private IEnumerator FadeOut()
     {
-        while (_alpha > 0f)
+        while (_fadeColor.a > 0f)
         {
-            _alpha -= Time.deltaTime;
-            
-            _fadeColor.a = _alpha;
+            _fadeColor.a -= Time.deltaTime;
 
             yield return null;
         }
