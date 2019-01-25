@@ -24,11 +24,6 @@ public static class MessageSystemManager
         _multitypeDelegates[messageType].AddDelegate(action);
     }
 
-    public static void AddListener(MessageType messageType, EventDelegate action)
-    {
-        AddListener<IMessageData>(messageType, (e) => action());
-    }
-
     public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
     {
         if (action == null)
@@ -42,11 +37,6 @@ public static class MessageSystemManager
         }
         
         _multitypeDelegates[messageType].RemoveDelegate(action);
-    }
-    
-    public static void RemoveListener(MessageType messageType, EventDelegate action)
-    {
-        RemoveListener<IMessageData>(messageType, (e) => action());
     }
 
     public static void Invoke(MessageType messageType, IMessageData messageData = null)

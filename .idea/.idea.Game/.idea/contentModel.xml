@@ -13,17 +13,18 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="CameraShake.cs" t="Include" />
           <e p="Components" t="Include">
             <e p="Asteroid.cs" t="Include" />
-            <e p="ObjectPool" t="Include">
-              <e p="ObjectPool.cs" t="Include" />
-              <e p="PoolableObject.cs" t="Include" />
-            </e>
           </e>
           <e p="Editor" t="Include">
             <e p="FieldEditor.cs" t="Include" />
           </e>
           <e p="Extension.cs" t="Include" />
+          <e p="Follow" t="Include">
+            <e p="SmoothDampFollow.cs" t="Include" />
+            <e p="SmoothFollow.cs" t="Include" />
+          </e>
           <e p="Managers" t="Include">
             <e p="AsteroidsManager.cs" t="Include" />
             <e p="BaseSingletonManager.cs" t="Include" />
@@ -49,10 +50,10 @@
             <e p="MessageType.cs" t="Include" />
             <e p="MultitypeDelegate.cs" t="Include" />
           </e>
-          <e p="UI" t="Include">
-            <e p="MovingMeshRenderer.cs" t="Include" />
-            <e p="SmoothDampFollow.cs" t="Include" />
-            <e p="SmoothFollow.cs" t="Include" />
+          <e p="MovingMeshRenderer.cs" t="Include" />
+          <e p="ObjectPool" t="Include">
+            <e p="ObjectPool.cs" t="Include" />
+            <e p="PoolableObject.cs" t="Include" />
           </e>
           <e p="Window" t="Include">
             <e p="LevelFailWindow.cs" t="Include" />

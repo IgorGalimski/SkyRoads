@@ -23,7 +23,7 @@ public class SmoothFollow : MonoBehaviour
         get { return _playerBoost ? _distanceBoost : _distance; }
     }
 
-    public float Height
+    private float Height
     {
         get { return _playerBoost ? _heightBoost : _height; }
     }
@@ -32,7 +32,8 @@ public class SmoothFollow : MonoBehaviour
     
     private void Awake()
     {
-        MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
+        MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);        
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
     }
 
     private void LateUpdate()
@@ -64,10 +65,16 @@ public class SmoothFollow : MonoBehaviour
     private void OnDestroy()
     {
         MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
     }
 
     private void OnPlayerBoostStatusChange(PlayerBoostStatus playerBoostStatus)
     {
         _playerBoost = playerBoostStatus.BoostStatus;
+    }
+
+    private void OnAsteroidCollision(IMessageData messageData)
+    {
+        enabled = false;
     }
 }

@@ -17,8 +17,8 @@ public class LevelManager : BaseSingletonManager
 
         _colorTexture = nullTexture;
 
-        MessageSystemManager.AddListener(MessageType.OnGameStart, OnGameStart);
-        MessageSystemManager.AddListener(MessageType.OnGameReplay, OnGameReplay);
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameReplay, OnGameReplay);
 
         StartSingleCoroutine(FadeOut());
     }
@@ -32,16 +32,16 @@ public class LevelManager : BaseSingletonManager
 
     private void OnDestroy()
     {
-        MessageSystemManager.RemoveListener(MessageType.OnGameStart, OnGameStart);
-        MessageSystemManager.RemoveListener(MessageType.OnGameReplay, OnGameReplay);
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameStart, OnGameStart);
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameReplay, OnGameReplay);
     }
 
-    private void OnGameStart()
+    private void OnGameStart(IMessageData messageData)
     {
         StartSingleCoroutine(LoadScene(1));
     }
 
-    private void OnGameReplay()
+    private void OnGameReplay(IMessageData messageData)
     {
         StartSingleCoroutine(LoadScene(1));
     }
