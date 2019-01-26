@@ -21,13 +21,15 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float _boostMultiplier = 2f;
 
-    private bool _boost;
+    [SerializeField] 
+    private ParticleSystem _asteroidCollisionEffect;
 
-    private float _rotat;
+    private bool _boost;
     
     private void Awake()
     {
         MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
@@ -43,6 +45,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDestroy()
     {
         MessageSystemManager.RemoveListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
@@ -86,5 +89,17 @@ public class PlayerManager : MonoBehaviour
     private void OnGameFail(LevelFailData levelFailData)
     {
         _yMoveSpeed = 0f;
+    }
+
+    private void OnAsteroidCollision(IMessageData messageData)
+    {
+        if (_asteroidCollisionEffect == null)
+        {
+            Debug.LogWarning("AsteroidCollisionEffect is null");
+            
+            return;
+        }
+        
+        _asteroidCollisionEffect.Play();
     }
 }
