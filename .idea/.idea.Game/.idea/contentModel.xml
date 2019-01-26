@@ -33,15 +33,13 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="CameraShake.cs" t="Include" />
           <e p="Components" t="Include">
             <e p="Asteroid.cs" t="Include" />
           </e>
           <e p="Editor" t="Include">
             <e p="ObjectPoolEditor.cs" t="Include" />
           </e>
-          <e p="Extension.cs" t="Include" />
-          <e p="Follow" t="Include">
+          <e p="Follows" t="Include">
             <e p="SmoothDampFollow.cs" t="Include" />
             <e p="SmoothFollow.cs" t="Include" />
           </e>
@@ -52,12 +50,14 @@
             <e p="GameManager.cs" t="Include" />
             <e p="InputManager.cs" t="Include" />
             <e p="LevelManager.cs" t="Include" />
+            <e p="LogManager.cs" t="Include" />
             <e p="PlayerManager.cs" t="Include" />
           </e>
           <e p="MessageSystem" t="Include">
             <e p="Data" t="Include">
               <e p="AsteroidPassedData.cs" t="Include" />
               <e p="AxisData.cs" t="Include" />
+              <e p="IMessageData.cs" t="Include" />
               <e p="KeyData.cs" t="Include" />
               <e p="LevelFailData.cs" t="Include" />
               <e p="PlayerBoostStatus.cs" t="Include" />
@@ -65,17 +65,20 @@
               <e p="ScoreData.cs" t="Include" />
               <e p="TimeData.cs" t="Include" />
             </e>
-            <e p="MessageData.cs" t="Include" />
             <e p="MessageSystemManager.cs" t="Include" />
             <e p="MessageType.cs" t="Include" />
             <e p="MultitypeDelegate.cs" t="Include" />
           </e>
-          <e p="MovingMeshRenderer.cs" t="Include" />
           <e p="ObjectPool" t="Include">
             <e p="ObjectPool.cs" t="Include" />
             <e p="PoolableObject.cs" t="Include" />
           </e>
-          <e p="Window" t="Include">
+          <e p="Other" t="Include">
+            <e p="CameraShake.cs" t="Include" />
+            <e p="Extension.cs" t="Include" />
+            <e p="MovingMeshRenderer.cs" t="Include" />
+          </e>
+          <e p="Windows" t="Include">
             <e p="LevelFailWindow.cs" t="Include" />
             <e p="LevelStartWindow.cs" t="Include" />
           </e>
