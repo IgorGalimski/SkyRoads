@@ -17,7 +17,7 @@ public class MultitypeDelegate
             
             return;
         }
-        
+
         _delegates[delegateType] = Delegate.Combine(_delegates[delegateType], addedDelegate);
     }
 
@@ -40,6 +40,11 @@ public class MultitypeDelegate
         Delegate[] invokeDelegates = _delegates.Values.ToArray();
         foreach (Delegate currentDelegate in invokeDelegates)
         {
+            if (currentDelegate == null)
+            {
+                continue;
+            }
+            
             ParameterInfo[] parameters = currentDelegate.Method.GetParameters();
             if (!parameters.Any())
             {

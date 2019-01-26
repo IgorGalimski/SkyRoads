@@ -20,8 +20,6 @@ public class LogManager
 
     private static void ApplicationOnLogMessageReceived(string condition, string stacktrace, LogType type)
     {
-        Debug.Log(_logPath);
-        
         File.AppendAllText(_logPath, string.Format(LOG_FORMAT, DateTime.Now, type, condition) + Environment.NewLine);
     }
 }

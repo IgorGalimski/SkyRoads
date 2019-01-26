@@ -45,9 +45,14 @@ public class PlayerManager : MonoBehaviour
     private ParticleEffect[] _particleEffects;
 
     private bool _boost;
+
+    private bool _fail;
     
     private void Awake()
     {
+        _boost = false;
+        _fail = false;
+        
         MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
@@ -57,6 +62,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (_fail)
+        {
+            return;
+        }
+        
         transform.position += Vector3.up * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
@@ -108,7 +118,9 @@ public class PlayerManager : MonoBehaviour
 
     private void OnGameFail(LevelFailData levelFailData)
     {
-        _yMoveSpeed = 0f;
+        _fail = true;
+        
+        MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
     }
 
     private void OnAsteroidCollision()
