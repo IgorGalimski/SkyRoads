@@ -44,6 +44,8 @@ namespace DefaultNamespace.Managers
                 SetDefaultValue(_currentScore);
                 SetDefaultValue(_bestScore);
             }
+            
+            MessageSystemManager.AddListener(MessageType.OnGameFail, OnGameFail);
         }
 
         private void OnDestroy()
@@ -62,6 +64,8 @@ namespace DefaultNamespace.Managers
             {
                 MessageSystemManager.RemoveListener<ScoreData>(MessageType.OnScoreUpdate, OnScoreUpdate);
             }
+            
+            MessageSystemManager.RemoveListener(MessageType.OnGameFail, OnGameFail);
         }
 
         private void SetDefaultValue(TextMeshProUGUI textMeshProUgui)
@@ -83,6 +87,11 @@ namespace DefaultNamespace.Managers
         {
             _currentScore.text = string.Format(CURRENT_SCORE_FORMAT, scoreData.CurrentScore);
             _bestScore.text = string.Format(BEST_SCORE_FORMAT, scoreData.BestScore);
+        }
+
+        private void OnGameFail()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

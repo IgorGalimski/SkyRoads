@@ -1,8 +1,28 @@
+using System;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class PlayerManager : MonoBehaviour
 {
+    [Serializable]
+    private struct ParticleEffect
+    {
+        [SerializeField]
+        private ParticleSystem _particleSystem;
+        public ParticleSystem ParticleSystem
+        {
+            get { return _particleSystem; }
+        }
+
+        [SerializeField]
+        private bool _play;
+        public bool Play
+        {
+            get { return _play; }
+        }
+    }
+    
     [SerializeField] 
     private float _xMoveSpeed = 5f;
     
@@ -22,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     private float _boostMultiplier = 2f;
 
     [SerializeField] 
-    private ParticleSystem _asteroidCollisionEffect;
+    private ParticleEffect[] _particleEffects;
 
     private bool _boost;
     
@@ -93,13 +113,28 @@ public class PlayerManager : MonoBehaviour
 
     private void OnAsteroidCollision()
     {
-        if (_asteroidCollisionEffect == null)
+        if (_particleEffects == null)
         {
-            Debug.LogWarning("AsteroidCollisionEffect is null");
-            
             return;
         }
-        
-        _asteroidCollisionEffect.Play();
+
+        foreach (ParticleEffect particleEffect in _particleEffects)
+        {
+            if (particleEffect.ParticleSystem == null)
+            {
+                Debug.LogWarning("ParticleEffect is null");
+                
+                continue;
+            }
+
+            if (particleEffect.Play)
+            {
+                particleEffect.ParticleSystem.Play();
+            }
+            else
+            {
+                particleEffect.ParticleSystem.Stop();
+            }
+        }
     }
 }

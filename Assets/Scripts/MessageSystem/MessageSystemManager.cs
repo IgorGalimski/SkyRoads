@@ -20,6 +20,26 @@ public static class MessageSystemManager
         AddListener(messageType, eventDelegate as Delegate);
     }
 
+    public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> eventDelegate) where T : IMessageData
+    {
+        RemoveListener(messageType, eventDelegate as Delegate);
+    }
+    
+    public static void RemoveListener(MessageType messageType, EventDelegate eventDelegate)
+    {
+        RemoveListener(messageType, eventDelegate as Delegate);
+    }
+
+    public static void Invoke(MessageType messageType, IMessageData messageData = null)
+    {
+        if (!_multitypeDelegates.ContainsKey(messageType))
+        {
+            return;
+        }
+        
+        _multitypeDelegates[messageType].Invoke(messageData);
+    }
+    
     private static void AddListener(MessageType messageType, Delegate action)
     {
         if (action == null)
@@ -34,17 +54,7 @@ public static class MessageSystemManager
         
         _multitypeDelegates[messageType].AddDelegate(action);
     }
-
-    public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> eventDelegate) where T : IMessageData
-    {
-        RemoveListener(messageType, eventDelegate as Delegate);
-    }
     
-    public static void RemoveListener(MessageType messageType, EventDelegate eventDelegate)
-    {
-        RemoveListener(messageType, eventDelegate as Delegate);
-    }
-
     private static void RemoveListener(MessageType messageType, Delegate action)
     {
         if (action == null)
@@ -58,15 +68,5 @@ public static class MessageSystemManager
         }
         
         _multitypeDelegates[messageType].RemoveDelegate(action);
-    }
-
-    public static void Invoke(MessageType messageType, IMessageData messageData = null)
-    {
-        if (!_multitypeDelegates.ContainsKey(messageType))
-        {
-            return;
-        }
-        
-        _multitypeDelegates[messageType].Invoke(messageData);
     }
 }

@@ -352,7 +352,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1437760891543858}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4528653323980302}
@@ -648,6 +648,13 @@ MonoBehaviour:
   _maxYDeflectionAngle: 60
   _boostMultiplier: 2
   _asteroidCollisionEffect: {fileID: 198222952693965180}
+  _particleEffects:
+  - _particleSystem: {fileID: 198222952693965180}
+    _play: 1
+  - _particleSystem: {fileID: 198405661397863788}
+    _play: 0
+  - _particleSystem: {fileID: 198337276656031750}
+    _play: 0
 --- !u!136 &136901921944866392
 CapsuleCollider:
   m_ObjectHideFlags: 1
