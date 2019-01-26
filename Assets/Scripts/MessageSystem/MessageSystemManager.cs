@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -9,7 +10,17 @@ public static class MessageSystemManager
     public delegate void EventDelegate ();
     
     private static Dictionary<MessageType, MultitypeDelegate> _multitypeDelegates = new Dictionary<MessageType, MultitypeDelegate>();
-    public static void AddListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
+    public static void AddListener<T>(MessageType messageType, EventDelegate<T> eventDelegate) where T : IMessageData
+    {
+        AddListener(messageType, eventDelegate as Delegate);
+    }
+    
+    public static void AddListener(MessageType messageType, EventDelegate eventDelegate)
+    {
+        AddListener(messageType, eventDelegate as Delegate);
+    }
+
+    private static void AddListener(MessageType messageType, Delegate action)
     {
         if (action == null)
         {
@@ -24,7 +35,17 @@ public static class MessageSystemManager
         _multitypeDelegates[messageType].AddDelegate(action);
     }
 
-    public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> action) where T : IMessageData
+    public static void RemoveListener<T>(MessageType messageType, EventDelegate<T> eventDelegate) where T : IMessageData
+    {
+        RemoveListener(messageType, eventDelegate as Delegate);
+    }
+    
+    public static void RemoveListener(MessageType messageType, EventDelegate eventDelegate)
+    {
+        RemoveListener(messageType, eventDelegate as Delegate);
+    }
+
+    private static void RemoveListener(MessageType messageType, Delegate action)
     {
         if (action == null)
         {

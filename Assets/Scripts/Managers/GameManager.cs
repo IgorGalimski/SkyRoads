@@ -21,22 +21,22 @@ public class GameManager : BaseSingletonManager
 
     protected override void Init()
     {
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
+        MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.AddListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameLoad, OnGameLoad);
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.AddListener(MessageType.OnGameLoad, OnGameLoad);
+        MessageSystemManager.AddListener(MessageType.OnGameFail, OnGameFail);
     }
 
     private void OnDestroy()
     {
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
+        MessageSystemManager.RemoveListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.RemoveListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
         MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
         MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameLoad, OnGameLoad);
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnGameFail, OnGameFail);
+        MessageSystemManager.RemoveListener(MessageType.OnGameLoad, OnGameLoad);
+        MessageSystemManager.RemoveListener(MessageType.OnGameFail, OnGameFail);
     }
     
     private int BestScore
@@ -45,7 +45,7 @@ public class GameManager : BaseSingletonManager
         set { PlayerPrefs.SetInt(BEST_SCORE_PREFS_KEY, value); }
     }
 
-    private void OnAsteroidCollision(IMessageData messageData)
+    private void OnAsteroidCollision()
     {
         TimeData timeData = new TimeData(_playingTime);
         AsteroidPassedData asteroidPassedData = new AsteroidPassedData(_asteroidPassed);
@@ -73,7 +73,7 @@ public class GameManager : BaseSingletonManager
         _boost = playerBoostStatus.BoostStatus;
     }
 
-    private void OnGameLoad(IMessageData messageData)
+    private void OnGameLoad()
     {
         _seconds = 0;
         _score = 0;
@@ -82,7 +82,7 @@ public class GameManager : BaseSingletonManager
         InvokeRepeating("Timer", 0.0f, 1.0f);
     }
 
-    private void OnGameFail(IMessageData messageData)
+    private void OnGameFail()
     {
         CancelInvoke("Timer");
     }

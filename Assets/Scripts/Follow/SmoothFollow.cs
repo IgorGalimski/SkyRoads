@@ -33,7 +33,7 @@ public class SmoothFollow : MonoBehaviour
     private void Awake()
     {
         MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);        
-        MessageSystemManager.AddListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
+        MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
     }
 
     private void LateUpdate()
@@ -65,7 +65,7 @@ public class SmoothFollow : MonoBehaviour
     private void OnDestroy()
     {
         MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
-        MessageSystemManager.RemoveListener<IMessageData>(MessageType.OnAsteroidCollision, OnAsteroidCollision);
+        MessageSystemManager.RemoveListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
     }
 
     private void OnPlayerBoostStatusChange(PlayerBoostStatus playerBoostStatus)
@@ -73,7 +73,7 @@ public class SmoothFollow : MonoBehaviour
         _playerBoost = playerBoostStatus.BoostStatus;
     }
 
-    private void OnAsteroidCollision(IMessageData messageData)
+    private void OnAsteroidCollision()
     {
         enabled = false;
     }

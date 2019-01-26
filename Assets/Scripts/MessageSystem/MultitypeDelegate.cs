@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 public class MultitypeDelegate
 {
@@ -39,7 +40,15 @@ public class MultitypeDelegate
         Delegate[] invokeDelegates = _delegates.Values.ToArray();
         foreach (Delegate currentDelegate in invokeDelegates)
         {
-            currentDelegate.DynamicInvoke(messageData);
+            ParameterInfo[] parameters = currentDelegate.Method.GetParameters();
+            if (!parameters.Any())
+            {
+                currentDelegate.DynamicInvoke();
+            }
+            else
+            {
+                currentDelegate.DynamicInvoke(messageData);
+            }            
         }
     }
 }
