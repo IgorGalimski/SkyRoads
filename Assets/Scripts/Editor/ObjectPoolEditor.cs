@@ -25,7 +25,7 @@ public class ObjectPoolEditor : Editor
 
     private void OnSceneGUI()
     {
-        Handles.SphereCap(1, _startPositionProperty.vector3Value, Quaternion.identity, HANDLE_SIZE);
+        Handles.SphereHandleCap(1, _startPositionProperty.vector3Value, Quaternion.identity, HANDLE_SIZE, EventType.Repaint);
 
         if (_objectPool.positionType == ObjectPool.PositionType.RandomDistance)
         {
@@ -57,7 +57,7 @@ public class ObjectPoolEditor : Editor
         {
             Vector3 newPosition = previousPosition + _offsetProperty.vector3Value;
             
-            Handles.DrawCube(2, newPosition, Quaternion.identity, HANDLE_SIZE);
+            Handles.CubeHandleCap(2, newPosition, Quaternion.identity, HANDLE_SIZE, EventType.Repaint);
 
             previousPosition = newPosition;
         }
