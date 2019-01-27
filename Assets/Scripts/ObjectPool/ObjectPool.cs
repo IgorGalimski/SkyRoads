@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
-using Object = System.Object;
-using Random = UnityEngine.Random;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -45,19 +43,19 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] 
     private PoolableObject[] _prefabs;
     
-    private List<PoolableObject> _instances = new List<PoolableObject>();
-    
+    private Dictionary<PoolableObject, GameObject> _instances = new Dictionary<PoolableObject, GameObject>();
     private Vector3 _previousPosition = Vector3.negativeInfinity;
 
+    public event Action OnInit;
     public event Action<GameObject> OnSetNewPosition;
 
     private float _distY;
 
-    public List<GameObject> Instances
+    public IEnumerable<GameObject> Instances
     {
         get
         {
-            return _instances.Select(item => item.gameObject).ToList();
+            return _instances.Values.Where(item => item != null);
         }
     }
 
@@ -77,7 +75,7 @@ public class ObjectPool : MonoBehaviour
     {
         Vector2 screenBottomPosition = Camera.main.ViewportToWorldPoint(Vector3.zero);
         
-        foreach (PoolableObject poolableObject in _instances)
+        foreach (PoolableObject poolableObject in _instances.Keys)
         {
             if (poolableObject.GetTopBorder().y < screenBottomPosition.y)
             {                
@@ -104,12 +102,17 @@ public class ObjectPool : MonoBehaviour
 		
         for (int i = 0; i < _initCount; i++)
         {
-            PoolableObject prefab = _prefabs[Random.Range(0, _prefabs.Length - 1)];
+            PoolableObject prefab = _prefabs.GetRandomElement<PoolableObject>();
 
-            PoolableObject instance = Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
-            instance.name = string.Concat(prefab.name, " ", i);
+            PoolableObject poolableObject = Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
+            poolableObject.name = string.Concat(prefab.name, " ", i);
 
-            _instances.Add(instance);
+            _instances.Add(poolableObject, poolableObject.gameObject);
+        }
+        
+        if(OnInit != null)
+        {
+            OnInit();
         }
     }
     
@@ -154,7 +157,7 @@ public class ObjectPool : MonoBehaviour
     
     private void OnDestroy()
     {
-        foreach (PoolableObject instance in _instances)
+        foreach (GameObject instance in _instances.Values)
         {
             Destroy(instance);
         }

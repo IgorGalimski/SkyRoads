@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(ObjectPool))]
@@ -9,6 +9,7 @@ public class AsteroidsManager : MonoBehaviour
 	private int _stepYDistanceInterval = 10;
 	
 	private List<Asteroid> _passedAsteroids = new List<Asteroid>();
+	private Asteroid[] _asteroids = new Asteroid[0];
 
 	private int _asteroidsPassed;
 
@@ -18,14 +19,24 @@ public class AsteroidsManager : MonoBehaviour
 	{
 		_objectPool = GetComponent<ObjectPool>();
 		_objectPool.OnSetNewPosition += OnSetNewPosition;
+		_objectPool.OnInit += OnInit;
 		
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
+	}
+	
+	private void Update()
+	{
+		foreach (Asteroid asteroid in _asteroids)
+		{
+			asteroid.Rotate();
+		}
 	}
 
 	private void OnDestroy()
 	{
 		_objectPool.OnSetNewPosition -= OnSetNewPosition;
+		_objectPool.OnInit -= OnInit;
 		
 		MessageSystemManager.RemoveListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
@@ -51,18 +62,34 @@ public class AsteroidsManager : MonoBehaviour
 		}
 	}
 
-	private void OnPlayerPositionUpdate(PositionData positionData)
+	private void OnInit()
 	{
-		foreach (GameObject instance in _objectPool.Instances)
+		_objectPool.OnInit -= OnInit;
+
+		int instanceCount = _objectPool.Instances.Count();
+		
+		_asteroids = new Asteroid[instanceCount];
+
+		for(int i = 0; i < instanceCount; i++)
 		{
+			GameObject instance = _objectPool.Instances.ElementAt(i);
+			
 			Asteroid asteroid = instance.GetComponent<Asteroid>();
-			if (asteroid == null)
+			if (asteroid != null)
+			{
+				_asteroids[i] = asteroid;
+			}
+			else
 			{
 				Debug.LogWarning("Asteroid is null");
-				
-				continue;
 			}
-			
+		}
+	}
+
+	private void OnPlayerPositionUpdate(PositionData positionData)
+	{
+		foreach (Asteroid asteroid in _asteroids)
+		{
 			if (asteroid.transform.position.y < positionData.Position.y)
 			{
 				if (!_passedAsteroids.Contains(asteroid))

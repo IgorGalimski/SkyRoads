@@ -9,7 +9,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] 
     private float _speed = 1f;
     
-    private void Update()
+    public void Rotate()
     {
         transform.Rotate(_rotationDirection * _speed * Time.deltaTime);
     }
