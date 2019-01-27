@@ -28,6 +28,8 @@ public class CameraShake : MonoBehaviour
 
 	private void OnGameFail(LevelFailData levelFailData)
 	{
+		MessageSystemManager.RemoveListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
+		
 		StartCoroutine(ShakeCamera());
 	}
  
