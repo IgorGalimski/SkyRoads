@@ -1,7 +1,6 @@
 ﻿using System;
 
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MeshRenderer))]
 public class MovingMeshRenderer : MonoBehaviour 
