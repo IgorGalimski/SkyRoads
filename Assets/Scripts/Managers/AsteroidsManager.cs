@@ -19,7 +19,15 @@ public class AsteroidsManager : MonoBehaviour
 	{
 		_objectPool = GetComponent<ObjectPool>();
 		_objectPool.OnSetNewPosition += OnSetNewPosition;
-		_objectPool.OnInit += OnInit;
+
+		if (_objectPool.IsInit)
+		{
+			OnInit();
+		}
+		else
+		{
+			_objectPool.OnInit += OnInit;
+		}
 		
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);

@@ -58,6 +58,8 @@ public class ObjectPool : MonoBehaviour
             return _instances.Values.Where(item => item != null);
         }
     }
+    
+    public bool IsInit { get; private set; }
 
     public void StepYDistance()
     {
@@ -67,6 +69,8 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         _distY = _distYMax;
+
+        IsInit = false;
         
         Init();
     }
@@ -109,6 +113,8 @@ public class ObjectPool : MonoBehaviour
 
             _instances.Add(poolableObject, poolableObject.gameObject);
         }
+
+        IsInit = true;
         
         if(OnInit != null)
         {
