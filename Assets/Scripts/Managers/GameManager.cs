@@ -41,8 +41,8 @@ public class GameManager : BaseManager
     
     private int BestScore
     {
-        get { return PlayerPrefs.GetInt(BEST_SCORE_PREFS_KEY); }
-        set { PlayerPrefs.SetInt(BEST_SCORE_PREFS_KEY, value); }
+        get => PlayerPrefs.GetInt(BEST_SCORE_PREFS_KEY);
+        set => PlayerPrefs.SetInt(BEST_SCORE_PREFS_KEY, value);
     }
 
     private void OnAsteroidCollision()

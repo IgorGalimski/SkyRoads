@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -8,6 +9,8 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] 
     private float _speed = 1f;
+
+    public event Action OnCollision;
     
     public void Rotate()
     {
@@ -16,6 +19,6 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
+        OnCollision?.Invoke();
     }
 }

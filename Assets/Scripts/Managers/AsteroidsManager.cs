@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(ObjectPool))]
-public class AsteroidsManager : BaseManager
+public class AsteroidsManager : MonoBehaviour
 {
 	[SerializeField] 
 	private int _stepYDistanceInterval = 10;
@@ -15,14 +15,8 @@ public class AsteroidsManager : BaseManager
 
 	private ObjectPool _objectPool;
 
-	protected override void Init()
+	public void Awake()
 	{
-	}
-
-	public new void Awake()
-	{
-		base.Awake();
-		
 		_objectPool = GetComponent<ObjectPool>();
 		_objectPool.OnSetNewPosition += OnSetNewPosition;
 
@@ -51,6 +45,11 @@ public class AsteroidsManager : BaseManager
 	{
 		_objectPool.OnSetNewPosition -= OnSetNewPosition;
 		_objectPool.OnInit -= OnInit;
+
+		foreach (var asteroid in _asteroids)
+		{
+			asteroid.OnCollision -= OnCollision;
+		}
 		
 		MessageSystemManager.RemoveListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
@@ -92,12 +91,18 @@ public class AsteroidsManager : BaseManager
 			if (asteroid != null)
 			{
 				_asteroids[i] = asteroid;
+				asteroid.OnCollision += OnCollision;
 			}
 			else
 			{
 				Debug.LogWarning("Asteroid is null");
 			}
 		}
+	}
+
+	private void OnCollision()
+	{
+		MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
 	}
 
 	private void OnPlayerPositionUpdate(PositionData positionData)
