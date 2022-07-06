@@ -6,24 +6,27 @@ public class InputManager : BaseManager
     [SerializeField] 
     private float _tolerance = 0.001f;
 
-    private float _vecticalAxis;
+    private float _verticalAxis;
     private float _horizontalAxis;
+
+    private KeyCode[] _keyCodes;
     
     protected override void Init()
     {
+        _keyCodes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
     }
 
     private void Update()
     {
-        _vecticalAxis = Input.GetAxis("Vertical");
+        _verticalAxis = Input.GetAxis("Vertical");
         _horizontalAxis = Input.GetAxis("Horizontal");
-
-        if (Math.Abs(_vecticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
+        
+        if (Math.Abs(_verticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
         {
-            MessageSystemManager.Invoke(MessageType.OnAxisInput, new AxisData(_horizontalAxis, _vecticalAxis));
+            MessageSystemManager.Invoke(MessageType.OnAxisInput, new AxisData(_horizontalAxis, _verticalAxis));
         }
 
-        foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+        foreach (KeyCode keyCode in _keyCodes)
         {
             if (Input.GetKeyDown(keyCode))
             {

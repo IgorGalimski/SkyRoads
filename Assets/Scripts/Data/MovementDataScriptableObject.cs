@@ -24,22 +24,6 @@ namespace Data
         [SerializeField]
         private float _boostMultiplier = 2f;
 
-        [SerializeField] 
-        private ParticleEffect[] _particleEffects;
-        
-        [Serializable]
-        public struct ParticleEffect
-        {
-            [SerializeField]
-            private ParticleSystem _particleSystem;
-
-            [SerializeField]
-            private bool _play;
-        
-            public ParticleSystem ParticleSystem => _particleSystem;
-            public bool Play => _play;
-        }
-
         public float XMoveSpeed => _xMoveSpeed;
 
         public float YMoveSpeed => _yMoveSpeed;
@@ -51,7 +35,5 @@ namespace Data
         public float MaxYDeflectionAngle => _maxYDeflectionAngle;
 
         public float BoostMultiplier => _boostMultiplier;
-
-        public ParticleEffect[] ParticleEffects => _particleEffects;
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(ObjectPool))]
-public class AsteroidsManager : MonoBehaviour
+public class AsteroidsManager : BaseManager
 {
 	[SerializeField] 
 	private int _stepYDistanceInterval = 10;
@@ -13,14 +13,20 @@ public class AsteroidsManager : MonoBehaviour
 
 	private int _asteroidsPassed;
 
-	private ObjectPool _objectPool; 
-	
-	private void Awake()
+	private ObjectPool _objectPool;
+
+	protected override void Init()
 	{
+	}
+
+	public new void Awake()
+	{
+		base.Awake();
+		
 		_objectPool = GetComponent<ObjectPool>();
 		_objectPool.OnSetNewPosition += OnSetNewPosition;
 
-		if (_objectPool.IsInit)
+		if (_objectPool.IsInitialized)
 		{
 			OnInit();
 		}
@@ -32,7 +38,7 @@ public class AsteroidsManager : MonoBehaviour
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
 	}
-	
+
 	private void Update()
 	{
 		foreach (Asteroid asteroid in _asteroids)

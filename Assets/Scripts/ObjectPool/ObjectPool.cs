@@ -59,7 +59,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
     
-    public bool IsInit { get; private set; }
+    public bool IsInitialized { get; private set; }
 
     public void StepYDistance()
     {
@@ -70,7 +70,7 @@ public class ObjectPool : MonoBehaviour
     {
         _distY = _distYMax;
 
-        IsInit = false;
+        IsInitialized = false;
         
         Init();
     }
@@ -114,12 +114,9 @@ public class ObjectPool : MonoBehaviour
             _instances.Add(poolableObject, poolableObject.gameObject);
         }
 
-        IsInit = true;
-        
-        if(OnInit != null)
-        {
-            OnInit();
-        }
+        IsInitialized = true;
+
+        OnInit?.Invoke();
     }
     
     private Vector3 GetNewPosition()

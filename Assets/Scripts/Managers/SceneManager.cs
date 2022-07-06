@@ -1,33 +1,19 @@
 ﻿using System.Collections;
-
+using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class LevelManager : BaseManager
+[RequireComponent(typeof(BackgroundView))]
+public class SceneManager : BaseManager
 {
-    private Texture _colorTexture;
-    
-    private Color _fadeColor = Color.black;
-    
+    [SerializeField] 
+    private BackgroundView _view;
+
     protected override void Init()
     {
-        Texture2D nullTexture = new Texture2D(1,1);
-        nullTexture.SetPixel(0,0, Color.black);
-        nullTexture.Apply();
-
-        _colorTexture = nullTexture;
-
         MessageSystemManager.AddListener(MessageType.OnGameStart, OnGameStart);
         MessageSystemManager.AddListener(MessageType.OnGameReplay, OnGameReplay);
 
         StartSingleCoroutine(FadeOut());
-    }
-    
-    private void OnGUI() 
-    {
-        GUI.depth = -2;
-        GUI.color = _fadeColor;
-        GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), _colorTexture, ScaleMode.StretchToFill, true);
     }
 
     private void OnDestroy()
@@ -57,7 +43,7 @@ public class LevelManager : BaseManager
     {
         yield return StartCoroutine(FadeIn());
         
-        SceneManager.LoadScene(sceneIndex);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
 
         yield return StartCoroutine(FadeOut());
         
@@ -66,9 +52,11 @@ public class LevelManager : BaseManager
 
     private IEnumerator FadeIn()
     {
-        while (_fadeColor.a < 1f)
+        _view.Alpha = 0f;
+        
+        while (_view.Alpha < 1f)
         {
-            _fadeColor.a += Time.deltaTime;
+            _view.Alpha += Time.deltaTime;
 
             yield return null;
         }
@@ -76,9 +64,11 @@ public class LevelManager : BaseManager
 
     private IEnumerator FadeOut()
     {
-        while (_fadeColor.a > 0f)
+        _view.Alpha = 1f;
+        
+        while (_view.Alpha > 0f)
         {
-            _fadeColor.a -= Time.deltaTime;
+            _view.Alpha -= Time.deltaTime;
 
             yield return null;
         }

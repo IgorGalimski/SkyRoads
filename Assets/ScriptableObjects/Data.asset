@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: Data
   m_EditorClassIdentifier: 
   _xMoveSpeed: 5
-  _yMoveSpeed: 5
-  _xMin: -5
-  _xMax: 5
+  _yMoveSpeed: 15
+  _xMin: -3
+  _xMax: 3
   _maxYDeflectionAngle: 60
   _boostMultiplier: 2
-  _particleEffects: []
+  _particleEffects:
+  - _particleSystem: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664,
+      type: 3}
+    _play: 1
+  - _particleSystem: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56,
+      type: 3}
+    _play: 0
+  - _particleSystem: {fileID: 0}
+    _play: 0
+  - _particleSystem: {fileID: 198791558892717060, guid: 73767e07adddc394d82b994801f89bbb,
+      type: 3}
+    _play: 1

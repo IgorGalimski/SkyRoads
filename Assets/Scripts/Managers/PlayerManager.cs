@@ -1,3 +1,4 @@
+using System;
 using Data;
 using UnityEngine;
 
@@ -6,6 +7,22 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] 
     private MovementDataScriptableObject _data;
+    
+    [SerializeField] 
+    private ParticleEffect[] _particleEffects;
+        
+    [Serializable]
+    public struct ParticleEffect
+    {
+        [SerializeField]
+        private ParticleSystem _particleSystem;
+
+        [SerializeField]
+        private bool _play;
+        
+        public ParticleSystem ParticleSystem => _particleSystem;
+        public bool Play => _play;
+    }
 
     private bool _boost;
 
@@ -91,12 +108,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnAsteroidCollision()
     {
-        if (_data.ParticleEffects == null)
+        if (_particleEffects == null)
         {
             return;
         }
 
-        foreach (MovementDataScriptableObject.ParticleEffect particleEffect in _data.ParticleEffects)
+        foreach (ParticleEffect particleEffect in _particleEffects)
         {
             if (particleEffect.ParticleSystem == null)
             {
