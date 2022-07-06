@@ -8,6 +8,7 @@
     OnPlayerPositionUpdate,
     OnPlayingTimeUpdate,
     OnAsteroidPassed,
+    OnPlayerBoostCollide,
     OnPlayerBoostStatusChange,
     OnGameStart,
     OnGameFail,

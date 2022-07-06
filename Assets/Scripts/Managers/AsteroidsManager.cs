@@ -9,7 +9,7 @@ public class AsteroidsManager : MonoBehaviour
 	private int _stepYDistanceInterval = 10;
 	
 	private List<Asteroid> _passedAsteroids = new List<Asteroid>();
-	private Asteroid[] _asteroids = new Asteroid[0];
+	private List<Asteroid> _asteroids;
 
 	private int _asteroidsPassed;
 
@@ -81,7 +81,7 @@ public class AsteroidsManager : MonoBehaviour
 
 		int instanceCount = _objectPool.Instances.Count();
 		
-		_asteroids = new Asteroid[instanceCount];
+		_asteroids = new List<Asteroid>(instanceCount);
 
 		for(int i = 0; i < instanceCount; i++)
 		{
@@ -90,7 +90,7 @@ public class AsteroidsManager : MonoBehaviour
 			Asteroid asteroid = instance.GetComponent<Asteroid>();
 			if (asteroid != null)
 			{
-				_asteroids[i] = asteroid;
+				_asteroids.Add(asteroid);
 				asteroid.OnCollision += OnCollision;
 			}
 			else
