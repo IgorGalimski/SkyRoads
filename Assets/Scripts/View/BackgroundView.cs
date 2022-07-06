@@ -19,5 +19,11 @@ namespace DefaultNamespace
                 _background.color = backgroundColor;
             }
         }
+
+        public bool Blocker
+        {
+            get => _background.raycastTarget;
+            set => _background.raycastTarget = value;
+        }
     }
 }

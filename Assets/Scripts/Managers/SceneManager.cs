@@ -53,6 +53,7 @@ public class SceneManager : BaseManager
     private IEnumerator FadeIn()
     {
         _view.Alpha = 0f;
+        _view.Blocker = true;
         
         while (_view.Alpha < 1f)
         {
@@ -72,5 +73,7 @@ public class SceneManager : BaseManager
 
             yield return null;
         }
+        
+        _view.Blocker = false;
     }
 }
