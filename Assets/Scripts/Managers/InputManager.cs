@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class InputManager : BaseSingletonManager
+public class InputManager : BaseManager
 {
     [SerializeField] 
     private float _tolerance = 0.001f;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class KeyData : IMessageData
 {
-    public KeyCode KeyCode { get; private set; }
+    public KeyCode KeyCode { get; }
 
     public KeyData(KeyCode keyCode)
     {

@@ -1,48 +1,11 @@
-using System;
-
+using Data;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class PlayerManager : MonoBehaviour
 {
-    [Serializable]
-    private struct ParticleEffect
-    {
-        [SerializeField]
-        private ParticleSystem _particleSystem;
-        public ParticleSystem ParticleSystem
-        {
-            get { return _particleSystem; }
-        }
-
-        [SerializeField]
-        private bool _play;
-        public bool Play
-        {
-            get { return _play; }
-        }
-    }
-    
     [SerializeField] 
-    private float _xMoveSpeed = 5f;
-    
-    [SerializeField]
-    private float _yMoveSpeed = 5f;
-
-    [SerializeField]
-    private float _xMin = -5f;
-    
-    [SerializeField]
-    private float _xMax = 5f;
-
-    [SerializeField] 
-    private float _maxYDeflectionAngle = 60f;
-
-    [SerializeField]
-    private float _boostMultiplier = 2f;
-
-    [SerializeField] 
-    private ParticleEffect[] _particleEffects;
+    private MovementDataScriptableObject _data;
 
     private bool _boost;
 
@@ -67,7 +30,10 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         
-        transform.position += Vector3.up * Time.deltaTime * _yMoveSpeed * (_boost ? _boostMultiplier : 1f);
+        transform.position += Vector3.up 
+                              * Time.deltaTime 
+                              * _data.YMoveSpeed 
+                              * (_boost ? _data.BoostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
     }
@@ -85,13 +51,13 @@ public class PlayerManager : MonoBehaviour
     {   
         Vector3 movementVector = axisData.HorizontalAxis > 0f ? Vector3.right : Vector3.left;
 
-        Vector3 position = (transform.position += movementVector * Time.deltaTime * _xMoveSpeed);
-        position.x = Mathf.Clamp(position.x, _xMin, _xMax);
+        Vector3 position = (transform.position += movementVector * Time.deltaTime * _data.XMoveSpeed);
+        position.x = Mathf.Clamp(position.x, _data.XMin, _data.XMax);
         
         transform.position = position;
 
         Vector3 rotation = transform.rotation.eulerAngles;
-        rotation.y = _maxYDeflectionAngle * axisData.HorizontalAxis;
+        rotation.y = _data.MaxYDeflectionAngle * axisData.HorizontalAxis;
 
         transform.rotation = Quaternion.Euler(rotation);
     }
@@ -125,12 +91,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnAsteroidCollision()
     {
-        if (_particleEffects == null)
+        if (_data.ParticleEffects == null)
         {
             return;
         }
 
-        foreach (ParticleEffect particleEffect in _particleEffects)
+        foreach (MovementDataScriptableObject.ParticleEffect particleEffect in _data.ParticleEffects)
         {
             if (particleEffect.ParticleSystem == null)
             {

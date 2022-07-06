@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class BaseSingletonManager : MonoBehaviour
+public abstract class BaseManager : MonoBehaviour
 {
-    private static BaseSingletonManager _instance;
+    private static BaseManager _instance;
 
     protected void Awake()
     {

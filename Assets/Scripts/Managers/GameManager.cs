@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameManager : BaseSingletonManager
+public class GameManager : BaseManager
 {
     private const string BEST_SCORE_PREFS_KEY = "BestScore";
     

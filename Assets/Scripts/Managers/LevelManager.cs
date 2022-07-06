@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : BaseSingletonManager
+public class LevelManager : BaseManager
 {
     private Texture _colorTexture;
     

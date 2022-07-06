@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class LogManager
+public static class LogManager
 {
     private const string LOG_FORMAT = "{0} [{1}] {2}";
 
