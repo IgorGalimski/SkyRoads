@@ -7,9 +7,15 @@ namespace Components
     public abstract class BaseCollisionComponent : MonoBehaviour
     {
         public event Action OnCollision;
-        
-        private void OnTriggerEnter(Collider other)
+
+        protected virtual void OnCollisionHandler()
         {
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            OnCollisionHandler();
+            
             OnCollision?.Invoke();
         }
     }

@@ -13,7 +13,7 @@ public class SmoothFollow : MonoBehaviour
     private float _heightBoost;
     
     [SerializeField]
-    private float _heightDamping = 2.0f;
+    private float _heightDamping = 4.0f;
     
     [SerializeField]
     private Transform _target;

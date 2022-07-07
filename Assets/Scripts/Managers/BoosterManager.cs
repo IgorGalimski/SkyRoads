@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Components;
+using MessageSystem.Data;
 using UnityEngine;
 
 namespace DefaultNamespace.Managers
@@ -7,6 +8,9 @@ namespace DefaultNamespace.Managers
     [RequireComponent(typeof(ObjectPool))]
     public class BoosterManager : MonoBehaviour
     {
+        [SerializeField] 
+        private BoosterView _boosterView;
+        
         private ObjectPool _objectPool;
 
         private List<Booster> _boosters = new List<Booster>();
@@ -22,6 +26,13 @@ namespace DefaultNamespace.Managers
             {
                 _objectPool.OnInit += OnInit;
             }
+            
+            MessageSystemManager.AddListener<BoostFillData>(MessageType.OnPlayerBoostFillChange, OnPlayerBoostFillChange);
+        }
+
+        private void OnPlayerBoostFillChange(BoostFillData boostFillData)
+        {
+            _boosterView.SetBoosterViewFill(boostFillData.Fill);
         }
 
         private void OnInit()
@@ -48,6 +59,8 @@ namespace DefaultNamespace.Managers
             {
                 booster.OnCollision -= OnCollision;
             }
+            
+            MessageSystemManager.RemoveListener<BoostFillData>(MessageType.OnPlayerBoostFillChange, OnPlayerBoostFillChange);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Data;
+using MessageSystem.Data;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -27,6 +28,8 @@ public class PlayerManager : MonoBehaviour
     private bool _boost;
 
     private bool _fail;
+
+    private float? _boostTime;
     
     private void Awake()
     {
@@ -36,8 +39,7 @@ public class PlayerManager : MonoBehaviour
         MessageSystemManager.AddListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.AddListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
-        MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
-        MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
+        MessageSystemManager.AddListener(MessageType.OnPlayerBoostCollide, OnPlayerBoost);
     }
 
     private void Update()
@@ -53,6 +55,25 @@ public class PlayerManager : MonoBehaviour
                               * (_boost ? _data.BoostMultiplier : 1f);
         
         MessageSystemManager.Invoke(MessageType.OnPlayerPositionUpdate, new PositionData(transform.position));
+
+        if (_boostTime.HasValue)
+        {
+            if (_boostTime.Value > 0)
+            {
+                _boostTime -= Time.deltaTime;
+                
+                MessageSystemManager.Invoke(MessageType.OnPlayerBoostFillChange, 
+                    new BoostFillData(_boostTime.Value / _data.BoostTime));
+            }
+            else
+            {
+                _boost = false;
+                _boostTime = null;
+                
+                MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, 
+                    new PlayerBoostStatus(_boost));
+            }
+        }
     }
 
     private void OnDestroy()
@@ -60,8 +81,7 @@ public class PlayerManager : MonoBehaviour
         MessageSystemManager.RemoveListener<LevelFailData>(MessageType.OnGameFail, OnGameFail);
         MessageSystemManager.RemoveListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
         MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
-        MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
-        MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyUp, OnKeyUp);
+        MessageSystemManager.RemoveListener(MessageType.OnPlayerBoostCollide, OnPlayerBoost);
     }
     
     private void OnInputAxis(AxisData axisData)
@@ -79,24 +99,13 @@ public class PlayerManager : MonoBehaviour
         transform.rotation = Quaternion.Euler(rotation);
     }
 
-    private void OnKeyDown(KeyData keyData)
+    private void OnPlayerBoost()
     {
-        if (keyData.KeyCode.Equals(KeyCode.Space))
-        {
-            _boost = true;
+        _boost = true;
+        
+        _boostTime = _data.BoostTime;
             
-            MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
-        }
-    }
-    
-    private void OnKeyUp(KeyData keyData)
-    {
-        if (keyData.KeyCode.Equals(KeyCode.Space))
-        {
-            _boost = false;
-            
-            MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
-        }
+        MessageSystemManager.Invoke(MessageType.OnPlayerBoostStatusChange, new PlayerBoostStatus(_boost));
     }
 
     private void OnGameFail(LevelFailData levelFailData)

@@ -24,6 +24,9 @@ namespace Data
         [SerializeField]
         private float _boostMultiplier = 2f;
 
+        [SerializeField] 
+        private float _boostTime = 3f;
+
         public float XMoveSpeed => _xMoveSpeed;
 
         public float YMoveSpeed => _yMoveSpeed;
@@ -35,5 +38,7 @@ namespace Data
         public float MaxYDeflectionAngle => _maxYDeflectionAngle;
 
         public float BoostMultiplier => _boostMultiplier;
+
+        public float BoostTime => _boostTime;
     }
 }

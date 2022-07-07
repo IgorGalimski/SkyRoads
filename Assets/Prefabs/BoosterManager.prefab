@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8614445440367862844}
+  - component: {fileID: 810114735484844768}
+  - component: {fileID: 3293255944179384127}
   m_Layer: 0
   m_Name: BoosterManager
   m_TagString: Untagged
@@ -30,3 +32,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810114735484844768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8614445440367862847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f60d60c73548c68af8bbfa13e8bfb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _positionType: 0
+  _xValues:
+  - -4
+  - 4
+  _distYMin: 150
+  _distYMax: 250
+  _distYStep: -1
+  _offset: {x: 0, y: 0, z: 0}
+  _startPosition: {x: 0, y: 50, z: -1}
+  _initCount: 1
+  _prefabs:
+  - {fileID: 6581209966456391249, guid: 5bda7971a75624cbe85e8e00d1bc7db8, type: 3}
+--- !u!114 &3293255944179384127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8614445440367862847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34a59966f00f401c830ebfe0b2e24b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

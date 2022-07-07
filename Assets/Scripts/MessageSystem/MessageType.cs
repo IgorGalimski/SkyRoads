@@ -9,6 +9,7 @@
     OnPlayingTimeUpdate,
     OnAsteroidPassed,
     OnPlayerBoostCollide,
+    OnPlayerBoostFillChange,
     OnPlayerBoostStatusChange,
     OnGameStart,
     OnGameFail,
