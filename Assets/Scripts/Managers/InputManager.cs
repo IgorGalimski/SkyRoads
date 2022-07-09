@@ -10,10 +10,13 @@ public class InputManager : BaseManager
     private float _horizontalAxis;
 
     private KeyCode[] _keyCodes;
+
+    private AxisData _axisData;
     
     protected override void Init()
     {
         _keyCodes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
+        _axisData = new AxisData();
     }
 
     private void Update()
@@ -23,7 +26,9 @@ public class InputManager : BaseManager
         
         if (Math.Abs(_verticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
         {
-            MessageSystemManager.Invoke(MessageType.OnAxisInput, new AxisData(_horizontalAxis, _verticalAxis));
+            _axisData.HorizontalAxis = _horizontalAxis;
+            _axisData.VerticalAxis = _verticalAxis;
+            MessageSystemManager.Invoke(MessageType.OnAxisInput, _axisData);
         }
 
         foreach (KeyCode keyCode in _keyCodes)

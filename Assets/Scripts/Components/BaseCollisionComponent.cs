@@ -16,8 +16,6 @@ namespace Components
         {
             OnCollisionHandler();
             
-            Debug.LogError(other.gameObject.name);
-            
             OnCollision?.Invoke();
         }
     }
