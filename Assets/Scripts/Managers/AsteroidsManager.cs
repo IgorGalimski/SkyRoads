@@ -31,6 +31,7 @@ public class AsteroidsManager : MonoBehaviour
 		
 		MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
+		MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
 	}
 
 	private void Update()
@@ -53,6 +54,16 @@ public class AsteroidsManager : MonoBehaviour
 		
 		MessageSystemManager.RemoveListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 		MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
+		MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange, OnPlayerBoostStatusChange);
+	}
+
+	private void OnPlayerBoostStatusChange(PlayerBoostStatus playerBoostStatus)
+	{
+		foreach (var asteroid in _asteroids)
+		{
+			Debug.LogError(asteroid.name);
+			asteroid.SetBoostStatus(playerBoostStatus.BoostStatus);
+		}
 	}
 
 	private void OnSetNewPosition(GameObject instance)
