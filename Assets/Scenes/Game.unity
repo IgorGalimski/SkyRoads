@@ -1031,12 +1031,12 @@ PrefabInstance:
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
       propertyPath: _xValues.Array.data[0]
-      value: -3
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
       propertyPath: _xValues.Array.data[1]
-      value: -1.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
@@ -1046,12 +1046,12 @@ PrefabInstance:
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
       propertyPath: _xValues.Array.data[3]
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
       propertyPath: _xValues.Array.data[4]
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114045636602216406, guid: 118c8d5bfa1ce4a45bda757b3ddcb1e9,
         type: 3}
@@ -1737,6 +1737,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 810114735484844768, guid: bdd54ce4705da4a0c949eada6efdf0f3,
+        type: 3}
+      propertyPath: _xValues.Array.data[0]
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 810114735484844768, guid: bdd54ce4705da4a0c949eada6efdf0f3,
+        type: 3}
+      propertyPath: _xValues.Array.data[1]
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3293255944179384127, guid: bdd54ce4705da4a0c949eada6efdf0f3,
         type: 3}
       propertyPath: _boosterView
