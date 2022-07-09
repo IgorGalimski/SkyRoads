@@ -28,6 +28,12 @@ namespace DefaultNamespace.Managers
             }
             
             MessageSystemManager.AddListener<BoostFillData>(MessageType.OnPlayerBoostFillChange, OnPlayerBoostFillChange);
+            MessageSystemManager.AddListener(MessageType.OnGameFail, OnGameFail);
+        }
+
+        private void OnGameFail()
+        {
+            _boosterView.SetBoosterViewFill(0f);
         }
 
         private void OnPlayerBoostFillChange(BoostFillData boostFillData)
@@ -61,6 +67,7 @@ namespace DefaultNamespace.Managers
             }
             
             MessageSystemManager.RemoveListener<BoostFillData>(MessageType.OnPlayerBoostFillChange, OnPlayerBoostFillChange);
+            MessageSystemManager.RemoveListener(MessageType.OnGameFail, OnGameFail);
         }
     }
 }

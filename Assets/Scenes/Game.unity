@@ -1104,6 +1104,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 108625454143486158, guid: e781a5a10acf71747be82dd5fc05f089,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 114121473479559382, guid: e781a5a10acf71747be82dd5fc05f089,
         type: 3}
       propertyPath: _data
@@ -1626,7 +1631,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2103456026}
   - component: {fileID: 2103456025}
-  - component: {fileID: 2103456024}
   - component: {fileID: 2103456027}
   - component: {fileID: 2103456028}
   m_Layer: 0
@@ -1636,14 +1640,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2103456024
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103456023}
-  m_Enabled: 1
 --- !u!20 &2103456025
 Camera:
   m_ObjectHideFlags: 0
