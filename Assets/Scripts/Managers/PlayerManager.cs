@@ -110,6 +110,8 @@ public class PlayerManager : MonoBehaviour
 
     private void OnGameFail(LevelFailData levelFailData)
     {
+        Debug.LogError("OnGameFail");
+        
         _fail = true;
         
         MessageSystemManager.RemoveListener<AxisData>(MessageType.OnAxisInput, OnInputAxis);
