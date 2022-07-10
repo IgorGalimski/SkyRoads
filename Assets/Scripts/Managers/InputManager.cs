@@ -24,13 +24,8 @@ namespace SpaceShooter.Managers
 
         private void Update()
         {
-#if UNITY_EDITOR
             _verticalAxis = Input.GetAxis("Vertical");
             _horizontalAxis = Input.GetAxis("Horizontal");
-#else
-            _horizontalAxis = Input.acceleration.x;
-            _verticalAxis = Input.acceleration.y;
-#endif
 
             if (Math.Abs(_verticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
             {

@@ -4,12 +4,7 @@ namespace SpaceShooter.MessageSystem.Data
     {
         private const string TIME_PLAYING_FORMAT = "Time: {0:D2}:{1:D2}:{2:D2}";
 
-        public int Seconds { get; private set; }
-
-        public TimeData(int seconds)
-        {
-            Seconds = seconds;
-        }
+        public int Seconds { get; set; }
 
         public string GetFormattedTime()
         {

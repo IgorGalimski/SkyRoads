@@ -2,10 +2,10 @@ namespace SpaceShooter.MessageSystem.Data
 {
     public class LevelFailData : IMessageData
     {
-        public TimeData Duration { get; private set; }
-        public AsteroidPassedData Asteroids { get; private set; }
-        public ScoreData Score { get; private set; }
-        public bool Record { get; private set; }
+        public TimeData Duration { get; }
+        public AsteroidPassedData Asteroids { get; }
+        public ScoreData Score { get; }
+        public bool Record { get; }
 
         public LevelFailData(TimeData duration, AsteroidPassedData asteroids, ScoreData score, bool record)
         {

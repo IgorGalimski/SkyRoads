@@ -8,7 +8,7 @@ namespace SpaceShooter.Managers
     {
         private const string BEST_SCORE_PREFS_KEY = "BestScore";
 
-        [SerializeField] private int _asteroidPassedScore = 5;
+        private const int ASTEROID_PASSED_SCORE = 5;
 
         private int _seconds;
 
@@ -18,6 +18,8 @@ namespace SpaceShooter.Managers
 
         private AsteroidPassedData _asteroidPassedData = new AsteroidPassedData();
 
+        private TimeData _timeData = new TimeData();
+
         private int _playingTime;
 
         private bool _record;
@@ -26,7 +28,6 @@ namespace SpaceShooter.Managers
         {
             MessageSystemManager.AddListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
             MessageSystemManager.AddListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
-            MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
             MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange,
                 OnPlayerBoostStatusChange);
             MessageSystemManager.AddListener(MessageType.OnGameLoad, OnGameLoad);
@@ -37,7 +38,6 @@ namespace SpaceShooter.Managers
         {
             MessageSystemManager.RemoveListener(MessageType.OnAsteroidCollision, OnAsteroidCollision);
             MessageSystemManager.RemoveListener<AsteroidPassedData>(MessageType.OnAsteroidPassed, OnAsteroidPassed);
-            MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
             MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange,
                 OnPlayerBoostStatusChange);
             MessageSystemManager.RemoveListener(MessageType.OnGameLoad, OnGameLoad);
@@ -52,24 +52,18 @@ namespace SpaceShooter.Managers
 
         private void OnAsteroidCollision()
         {
-            TimeData timeData = new TimeData(_playingTime);
             ScoreData scoreData = new ScoreData(_score, BestScore);
 
-            LevelFailData levelFailData = new LevelFailData(timeData, _asteroidPassedData, scoreData, _record);
+            LevelFailData levelFailData = new LevelFailData(_timeData, _asteroidPassedData, scoreData, _record);
 
             MessageSystemManager.Invoke(MessageType.OnGameFail, levelFailData);
         }
 
         private void OnAsteroidPassed(AsteroidPassedData asteroidPassedData)
         {
-            _score += _asteroidPassedScore;
+            _score += ASTEROID_PASSED_SCORE;
 
             _asteroidPassedData = asteroidPassedData;
-        }
-
-        private void OnPlayingTimeUpdate(TimeData timeData)
-        {
-            _playingTime = timeData.Seconds;
         }
 
         private void OnPlayerBoostStatusChange(PlayerBoostStatus playerBoostStatus)
@@ -83,19 +77,20 @@ namespace SpaceShooter.Managers
             _score = 0;
             _record = false;
 
-            InvokeRepeating("Timer", 0.0f, 1.0f);
+            InvokeRepeating(nameof(Timer), 0.0f, 1.0f);
         }
 
         private void OnGameFail()
         {
-            CancelInvoke("Timer");
+            CancelInvoke(nameof(Timer));
         }
 
         private void Timer()
         {
             _seconds++;
-
-            MessageSystemManager.Invoke(MessageType.OnPlayingTimeUpdate, new TimeData(_seconds));
+            _timeData.Seconds = _seconds;
+            
+            MessageSystemManager.Invoke(MessageType.OnPlayingTimeUpdate, _timeData);
 
             if (_boost)
             {
