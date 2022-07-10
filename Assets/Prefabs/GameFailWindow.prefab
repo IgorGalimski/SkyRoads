@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 95933961046189104}
   - component: {fileID: 114650643472699762}
   m_Layer: 0
-  m_Name: LevelFailWindow
+  m_Name: GameFailWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace SpaceShooter.Windows
 {
     [RequireComponent(typeof(Animator))]
-    public class LevelFailWindow : MonoBehaviour
+    public class GameFailWindow : MonoBehaviour
     {
         private static readonly int ShowTriggerName = Animator.StringToHash(SHOW_TRIGGER_NAME);
         private const string SHOW_TRIGGER_NAME = "Show";

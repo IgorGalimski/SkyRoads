@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SpaceShooter.Windows
 {
-    public class LevelStartWindow : MonoBehaviour
+    public class GameStartWindow : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _levelStart;
 

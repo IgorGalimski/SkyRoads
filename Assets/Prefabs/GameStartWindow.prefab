@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 224098738825473460}
   - component: {fileID: 114802652954555160}
   m_Layer: 5
-  m_Name: LevelStartWindow
+  m_Name: GameStartWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
