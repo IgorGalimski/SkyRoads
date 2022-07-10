@@ -1,35 +1,38 @@
-﻿using TMPro;
-
+﻿using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
+using TMPro;
 using UnityEngine;
 
-public class LevelStartWindow : MonoBehaviour
+namespace SpaceShooter.Windows
 {
-    [SerializeField] 
-    private TextMeshProUGUI _levelStart;
-    
-    private void Awake()
+    public class LevelStartWindow : MonoBehaviour
     {
-        MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
-    }
+        [SerializeField] private TextMeshProUGUI _levelStart;
 
-    private void OnDestroy()
-    {
-        MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
-    }
-
-    private void OnKeyDown(KeyData keyData)
-    {
-        MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
-
-        if (_levelStart != null)
+        private void Awake()
         {
-            _levelStart.enabled = false;
+            MessageSystemManager.AddListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         }
-        else
+
+        private void OnDestroy()
         {
-            Debug.LogWarning("Level start is null");
+            MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
         }
-        
-        MessageSystemManager.Invoke(MessageType.OnGameStart);
+
+        private void OnKeyDown(KeyData keyData)
+        {
+            MessageSystemManager.RemoveListener<KeyData>(MessageType.OnKeyDown, OnKeyDown);
+
+            if (_levelStart != null)
+            {
+                _levelStart.enabled = false;
+            }
+            else
+            {
+                Debug.LogWarning("Level start is null");
+            }
+
+            MessageSystemManager.Invoke(MessageType.OnGameStart);
+        }
     }
 }

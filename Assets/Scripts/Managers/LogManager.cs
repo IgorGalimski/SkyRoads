@@ -2,24 +2,28 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public static class LogManager
+namespace SpaceShooter.Managers
 {
-    private const string LOG_FORMAT = "{0} [{1}] {2}";
-
-    private const string LOG_FILENAME = "log.txt";
-
-    private static string _logPath;
-    
-    [RuntimeInitializeOnLoadMethod]
-    private static void Init()
+    public static class LogManager
     {
-        _logPath = Path.Combine(Application.persistentDataPath, LOG_FILENAME);
-        
-        Application.logMessageReceived += ApplicationOnLogMessageReceived;
-    }
+        private const string LOG_FORMAT = "{0} [{1}] {2}";
 
-    private static void ApplicationOnLogMessageReceived(string condition, string stacktrace, LogType type)
-    {
-        File.AppendAllText(_logPath, string.Format(LOG_FORMAT, DateTime.Now, type, condition) + Environment.NewLine);
+        private const string LOG_FILENAME = "log.txt";
+
+        private static string _logPath;
+
+        [RuntimeInitializeOnLoadMethod]
+        private static void Init()
+        {
+            _logPath = Path.Combine(Application.persistentDataPath, LOG_FILENAME);
+
+            Application.logMessageReceived += ApplicationOnLogMessageReceived;
+        }
+
+        private static void ApplicationOnLogMessageReceived(string condition, string stacktrace, LogType type)
+        {
+            File.AppendAllText(_logPath,
+                string.Format(LOG_FORMAT, DateTime.Now, type, condition) + Environment.NewLine);
+        }
     }
 }

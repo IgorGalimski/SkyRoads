@@ -3,57 +3,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-public class MultitypeDelegate
+namespace SpaceShooter.MessageSystem.Data
 {
-    private Dictionary<Type, Delegate> _delegates = new Dictionary<Type, Delegate>();
-
-    public void AddDelegate(Delegate addedDelegate)
+    public class MultitypeDelegate
     {
-        Type delegateType = addedDelegate.GetType();
-        
-        if (!_delegates.ContainsKey(delegateType))
+        private Dictionary<Type, Delegate> _delegates = new Dictionary<Type, Delegate>();
+
+        public void AddDelegate(Delegate addedDelegate)
         {
-            _delegates[delegateType] = addedDelegate;
-            
-            return;
+            Type delegateType = addedDelegate.GetType();
+
+            if (!_delegates.ContainsKey(delegateType))
+            {
+                _delegates[delegateType] = addedDelegate;
+
+                return;
+            }
+
+            _delegates[delegateType] = Delegate.Combine(_delegates[delegateType], addedDelegate);
         }
 
-        _delegates[delegateType] = Delegate.Combine(_delegates[delegateType], addedDelegate);
-    }
-
-    public void RemoveDelegate(Delegate removedDelegate)
-    {
-        Type delegateType = removedDelegate.GetType();
-        
-        if (!_delegates.ContainsKey(delegateType))
+        public void RemoveDelegate(Delegate removedDelegate)
         {
-            _delegates[delegateType] = removedDelegate;
-            
-            return;
+            Type delegateType = removedDelegate.GetType();
+
+            if (!_delegates.ContainsKey(delegateType))
+            {
+                _delegates[delegateType] = removedDelegate;
+
+                return;
+            }
+
+            _delegates[delegateType] = Delegate.Remove(_delegates[delegateType], removedDelegate);
         }
-        
-        _delegates[delegateType] = Delegate.Remove(_delegates[delegateType], removedDelegate);
-    }
 
-    public void Invoke(IMessageData messageData)
-    {
-        Delegate[] invokeDelegates = _delegates.Values.ToArray();
-        foreach (Delegate currentDelegate in invokeDelegates)
+        public void Invoke(IMessageData messageData)
         {
-            if (currentDelegate == null)
+            Delegate[] invokeDelegates = _delegates.Values.ToArray();
+            foreach (Delegate currentDelegate in invokeDelegates)
             {
-                continue;
+                if (currentDelegate == null)
+                {
+                    continue;
+                }
+
+                ParameterInfo[] parameters = currentDelegate.Method.GetParameters();
+                if (!parameters.Any())
+                {
+                    currentDelegate.DynamicInvoke();
+                }
+                else
+                {
+                    currentDelegate.DynamicInvoke(messageData);
+                }
             }
-            
-            ParameterInfo[] parameters = currentDelegate.Method.GetParameters();
-            if (!parameters.Any())
-            {
-                currentDelegate.DynamicInvoke();
-            }
-            else
-            {
-                currentDelegate.DynamicInvoke(messageData);
-            }            
         }
     }
 }

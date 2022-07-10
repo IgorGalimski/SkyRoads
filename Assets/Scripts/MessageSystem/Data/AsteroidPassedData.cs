@@ -1,16 +1,19 @@
-public class AsteroidPassedData : IMessageData
+namespace SpaceShooter.MessageSystem.Data
 {
-    private const string ASTEROIDS_PASSED_FORMAT = "Asteroids: {0}";
-    
-    public int Count { get; }
-
-    public AsteroidPassedData(int count)
+    public class AsteroidPassedData : IMessageData
     {
-        Count = count;
-    }
+        private const string ASTEROIDS_PASSED_FORMAT = "Asteroids: {0}";
 
-    public string GetFormattedCount()
-    {
-        return string.Format(ASTEROIDS_PASSED_FORMAT, Count);
+        public int Count { get; }
+
+        public AsteroidPassedData(int count)
+        {
+            Count = count;
+        }
+
+        public string GetFormattedCount()
+        {
+            return string.Format(ASTEROIDS_PASSED_FORMAT, Count);
+        }
     }
 }

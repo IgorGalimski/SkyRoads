@@ -4,167 +4,160 @@ using System.Linq;
 
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+namespace SpaceShooter.ObjectPool
 {
-    public enum PositionType
+    public class ObjectPool : MonoBehaviour
     {
-        RandomDistance,
-        Offset
-    }
-
-    [SerializeField] 
-    private PositionType _positionType;
-    public PositionType positionType
-    {
-        get { return _positionType; }
-    }
-
-    [SerializeField] 
-    private List<float> _xValues;
-
-    [SerializeField]
-    private float _distYMin;
-	
-    [SerializeField]
-    private float _distYMax;
-
-    [SerializeField] 
-    private float _distYStep;
-
-    [SerializeField] 
-    private Vector3 _offset;
-
-    [SerializeField] 
-    private Vector3 _startPosition = Vector3.zero;
-    
-    [SerializeField] [Range(1f, 100f)]
-    private int _initCount;
-
-    [SerializeField] 
-    private PoolableObject[] _prefabs;
-    
-    private Dictionary<PoolableObject, GameObject> _instances = new Dictionary<PoolableObject, GameObject>();
-    private Vector3 _previousPosition = Vector3.negativeInfinity;
-
-    public event Action OnInit;
-    public event Action<GameObject> OnSetNewPosition;
-
-    private float _distY;
-
-    public IEnumerable<GameObject> Instances
-    {
-        get
+        public enum PositionType
         {
-            return _instances.Values.Where(item => item != null);
-        }
-    }
-    
-    public bool IsInitialized { get; private set; }
-
-    public void StepYDistance()
-    {
-        _distY = Mathf.Clamp(_distY + _distYStep, _distYMin, _distYMax);
-    }
-
-    private void Awake()
-    {
-        _distY = _distYMax;
-
-        IsInitialized = false;
-        
-        Init();
-    }
-    
-    private void Update()
-    {
-        Vector2 screenBottomPosition = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        
-        foreach (PoolableObject poolableObject in _instances.Keys)
-        {
-            if (poolableObject.GetTopBorder().y < screenBottomPosition.y)
-            {                
-                if (OnSetNewPosition != null)
-                {
-                    OnSetNewPosition(poolableObject.gameObject);
-                }
-				
-                poolableObject.transform.position = GetNewPosition();
-            }
-        }
-    }
-    
-    private void Init()
-    {
-        if (_prefabs == null || !_prefabs.Any())
-        {
-            Debug.LogError("Prefabs are null or empty!");
-			
-            return;
+            RandomDistance,
+            Offset
         }
 
-        _previousPosition = _startPosition;
-		
-        for (int i = 0; i < _initCount; i++)
+        [SerializeField] private PositionType _positionType;
+
+        public PositionType positionType
         {
-            PoolableObject prefab = _prefabs.GetRandomElement<PoolableObject>();
-
-            PoolableObject poolableObject = Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
-            poolableObject.name = string.Concat(prefab.name, " ", i);
-
-            _instances.Add(poolableObject, poolableObject.gameObject);
+            get { return _positionType; }
         }
 
-        IsInitialized = true;
+        [SerializeField] private List<float> _xValues;
 
-        OnInit?.Invoke();
-    }
-    
-    private Vector3 GetNewPosition()
-    {
-        Vector3 newPosition = Vector3.zero;
+        [SerializeField] private float _distYMin;
 
-        if (_previousPosition != Vector3.negativeInfinity)
+        [SerializeField] private float _distYMax;
+
+        [SerializeField] private float _distYStep;
+
+        [SerializeField] private Vector3 _offset;
+
+        [SerializeField] private Vector3 _startPosition = Vector3.zero;
+
+        [SerializeField] [Range(1f, 100f)] private int _initCount;
+
+        [SerializeField] private PoolableObject[] _prefabs;
+
+        private Dictionary<PoolableObject, GameObject> _instances = new Dictionary<PoolableObject, GameObject>();
+        private Vector3 _previousPosition = Vector3.negativeInfinity;
+
+        public event Action OnInit;
+        public event Action<GameObject> OnSetNewPosition;
+
+        private float _distY;
+
+        public IEnumerable<GameObject> Instances
         {
-            switch (_positionType)
+            get { return _instances.Values.Where(item => item != null); }
+        }
+
+        public bool IsInitialized { get; private set; }
+
+        public void StepYDistance()
+        {
+            _distY = Mathf.Clamp(_distY + _distYStep, _distYMin, _distYMax);
+        }
+
+        private void Awake()
+        {
+            _distY = _distYMax;
+
+            IsInitialized = false;
+
+            Init();
+        }
+
+        private void Update()
+        {
+            Vector2 screenBottomPosition = Camera.main.ViewportToWorldPoint(Vector3.zero);
+
+            foreach (PoolableObject poolableObject in _instances.Keys)
             {
-                case PositionType.RandomDistance:
+                if (poolableObject.GetTopBorder().y < screenBottomPosition.y)
                 {
-                    float x = _xValues
-                        .Where(item => !Mathf.Approximately(item, _previousPosition.x))
-                        .ToArray()
-                        .GetRandomElement<float>();
-                    float y = _distY + _previousPosition.y;
+                    if (OnSetNewPosition != null)
+                    {
+                        OnSetNewPosition(poolableObject.gameObject);
+                    }
 
-                    newPosition = new Vector3(x, y, _previousPosition.z);
-
-                    break;
-                }
-
-                case PositionType.Offset:
-                {
-                    newPosition = _previousPosition + _offset;
-
-                    break;
+                    poolableObject.transform.position = GetNewPosition();
                 }
             }
         }
-        else
+
+        private void Init()
         {
-            newPosition = _startPosition;
+            if (_prefabs == null || !_prefabs.Any())
+            {
+                Debug.LogError("Prefabs are null or empty!");
+
+                return;
+            }
+
+            _previousPosition = _startPosition;
+
+            for (int i = 0; i < _initCount; i++)
+            {
+                PoolableObject prefab = _prefabs.GetRandomElement<PoolableObject>();
+
+                PoolableObject poolableObject =
+                    Instantiate(prefab, GetNewPosition(), prefab.transform.rotation, transform);
+                poolableObject.name = string.Concat(prefab.name, " ", i);
+
+                _instances.Add(poolableObject, poolableObject.gameObject);
+            }
+
+            IsInitialized = true;
+
+            OnInit?.Invoke();
         }
 
-        _previousPosition = newPosition;
-
-        return newPosition;
-    }
-    
-    private void OnDestroy()
-    {
-        foreach (GameObject instance in _instances.Values)
+        private Vector3 GetNewPosition()
         {
-            Destroy(instance);
+            Vector3 newPosition = Vector3.zero;
+
+            if (_previousPosition != Vector3.negativeInfinity)
+            {
+                switch (_positionType)
+                {
+                    case PositionType.RandomDistance:
+                    {
+                        float x = _xValues
+                            .Where(item => !Mathf.Approximately(item, _previousPosition.x))
+                            .ToArray()
+                            .GetRandomElement<float>();
+                        float y = _distY + _previousPosition.y;
+
+                        newPosition = new Vector3(x, y, _previousPosition.z);
+
+                        break;
+                    }
+
+                    case PositionType.Offset:
+                    {
+                        newPosition = _previousPosition + _offset;
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                newPosition = _startPosition;
+            }
+
+            _previousPosition = newPosition;
+
+            return newPosition;
         }
-		
-        _instances.Clear();
+
+        private void OnDestroy()
+        {
+            foreach (GameObject instance in _instances.Values)
+            {
+                Destroy(instance);
+            }
+
+            _instances.Clear();
+        }
     }
 }

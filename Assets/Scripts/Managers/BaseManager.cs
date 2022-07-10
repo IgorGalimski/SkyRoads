@@ -1,27 +1,30 @@
 using UnityEngine;
 
-public abstract class BaseManager : MonoBehaviour
+namespace SpaceShooter.Managers
 {
-    private static BaseManager _instance;
-
-    protected void Awake()
+    public abstract class BaseManager : MonoBehaviour
     {
-        if (_instance == null) 
+        private static BaseManager _instance;
+
+        protected void Awake()
         {
-            _instance = this;
-        } 
-        else 
-        {
-            if(_instance == this)
+            if (_instance == null)
             {
-                Destroy(gameObject);
+                _instance = this;
             }
+            else
+            {
+                if (_instance == this)
+                {
+                    Destroy(gameObject);
+                }
+            }
+
+            DontDestroyOnLoad(gameObject);
+
+            Init();
         }
 
-        DontDestroyOnLoad(gameObject);
-        
-        Init();
+        protected abstract void Init();
     }
-
-    protected abstract void Init();
 }

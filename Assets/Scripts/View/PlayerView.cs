@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace SpaceShooter.View
 {
     [RequireComponent(typeof(Collider))]
     public class PlayerView : MonoBehaviour

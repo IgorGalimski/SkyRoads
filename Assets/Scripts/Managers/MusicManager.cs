@@ -1,7 +1,9 @@
-using Data;
+using SpaceShooter.Data;
+using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
 using UnityEngine;
 
-namespace DefaultNamespace.Managers
+namespace SpaceShooter.Managers
 {
     public class MusicManager : BaseManager
     {

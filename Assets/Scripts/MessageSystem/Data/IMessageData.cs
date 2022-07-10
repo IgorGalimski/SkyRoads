@@ -1,3 +1,6 @@
-public interface IMessageData
- {
- }
+namespace SpaceShooter.MessageSystem.Data
+{
+    public interface IMessageData
+    {
+    }
+}

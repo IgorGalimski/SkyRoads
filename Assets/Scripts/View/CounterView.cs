@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace SpaceShooter.View
 {
     public class CounterView : MonoBehaviour
     {

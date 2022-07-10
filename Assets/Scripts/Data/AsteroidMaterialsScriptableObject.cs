@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace SpaceShooter.Data
 {
     [CreateAssetMenu(fileName = "AsteroidMaterials", menuName = "ScriptableObjects/AsteroidMaterialScriptableObject", order = 1)]
     public class AsteroidMaterialsScriptableObject : ScriptableObject

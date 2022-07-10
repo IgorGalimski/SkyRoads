@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
+using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {

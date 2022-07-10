@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class KeyData : IMessageData
+namespace SpaceShooter.MessageSystem.Data
 {
-    public KeyCode KeyCode { get; }
-
-    public KeyData(KeyCode keyCode)
+    public class KeyData : IMessageData
     {
-        KeyCode = keyCode;
+        public KeyCode KeyCode { get; }
+
+        public KeyData(KeyCode keyCode)
+        {
+            KeyCode = keyCode;
+        }
     }
 }

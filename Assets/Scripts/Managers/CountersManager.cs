@@ -1,6 +1,9 @@
+using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
+using SpaceShooter.View;
 using UnityEngine;
 
-namespace DefaultNamespace.Managers
+namespace SpaceShooter.Managers
 {
     [RequireComponent(typeof(CounterView))]
     public class CountersManager : MonoBehaviour

@@ -1,46 +1,50 @@
 using System;
+using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
 using UnityEngine;
 
-public class InputManager : BaseManager
+namespace SpaceShooter.Managers
 {
-    [SerializeField] 
-    private float _tolerance = 0.001f;
-
-    private float _verticalAxis;
-    private float _horizontalAxis;
-
-    private KeyCode[] _keyCodes;
-
-    private AxisData _axisData;
-    
-    protected override void Init()
+    public class InputManager : BaseManager
     {
-        _keyCodes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
-        _axisData = new AxisData();
-    }
+        [SerializeField] private float _tolerance = 0.001f;
 
-    private void Update()
-    {
-        _verticalAxis = Input.GetAxis("Vertical");
-        _horizontalAxis = Input.GetAxis("Horizontal");
-        
-        if (Math.Abs(_verticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
+        private float _verticalAxis;
+        private float _horizontalAxis;
+
+        private KeyCode[] _keyCodes;
+
+        private AxisData _axisData;
+
+        protected override void Init()
         {
-            _axisData.HorizontalAxis = _horizontalAxis;
-            _axisData.VerticalAxis = _verticalAxis;
-            MessageSystemManager.Invoke(MessageType.OnAxisInput, _axisData);
+            _keyCodes = (KeyCode[])Enum.GetValues(typeof(KeyCode));
+            _axisData = new AxisData();
         }
 
-        foreach (KeyCode keyCode in _keyCodes)
+        private void Update()
         {
-            if (Input.GetKeyDown(keyCode))
+            _verticalAxis = Input.GetAxis("Vertical");
+            _horizontalAxis = Input.GetAxis("Horizontal");
+
+            if (Math.Abs(_verticalAxis) > _tolerance || Math.Abs(_horizontalAxis) > _tolerance)
             {
-                MessageSystemManager.Invoke(MessageType.OnKeyDown, new KeyData(keyCode));
+                _axisData.HorizontalAxis = _horizontalAxis;
+                _axisData.VerticalAxis = _verticalAxis;
+                MessageSystemManager.Invoke(MessageType.OnAxisInput, _axisData);
             }
-            
-            if (Input.GetKeyUp(keyCode))
+
+            foreach (KeyCode keyCode in _keyCodes)
             {
-                MessageSystemManager.Invoke(MessageType.OnKeyUp, new KeyData(keyCode));
+                if (Input.GetKeyDown(keyCode))
+                {
+                    MessageSystemManager.Invoke(MessageType.OnKeyDown, new KeyData(keyCode));
+                }
+
+                if (Input.GetKeyUp(keyCode))
+                {
+                    MessageSystemManager.Invoke(MessageType.OnKeyUp, new KeyData(keyCode));
+                }
             }
         }
     }

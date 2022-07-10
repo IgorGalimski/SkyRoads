@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Data
+namespace SpaceShooter.Data
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SoundsScriptableObject", order = 1)]
     public class SoundsScriptableObject : ScriptableObject

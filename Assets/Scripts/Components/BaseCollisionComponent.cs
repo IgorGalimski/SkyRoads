@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Components
+namespace SpaceShooter.Components
 {
     [RequireComponent(typeof(Collider))]
     public abstract class BaseCollisionComponent : MonoBehaviour

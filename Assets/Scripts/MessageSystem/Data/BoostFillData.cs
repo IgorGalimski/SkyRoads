@@ -1,4 +1,4 @@
-namespace MessageSystem.Data
+namespace SpaceShooter.MessageSystem.Data
 {
     public class BoostFillData : IMessageData
     {

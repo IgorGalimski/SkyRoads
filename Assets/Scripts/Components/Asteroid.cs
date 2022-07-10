@@ -1,40 +1,42 @@
-using Components;
-using Data;
+using SpaceShooter.Data;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class Asteroid : BaseCollisionComponent
+namespace SpaceShooter.Components
 {
-    [SerializeField] 
-    private Vector3 _rotationDirection = Vector3.up;
-
-    [SerializeField] 
-    private float _speed = 1f;
-
-    [SerializeField] 
-    private MeshRenderer _meshRenderer;
-
-    [SerializeField] 
-    private AsteroidMaterialsScriptableObject _materials;
-
-    private Collider _collider;
-
-    public void Awake()
+    [RequireComponent(typeof(Collider))]
+    public class Asteroid : BaseCollisionComponent
     {
-        _collider = GetComponent<Collider>();
-    }
+        [SerializeField] 
+        private Vector3 _rotationDirection = Vector3.up;
 
-    public void Rotate()
-    {
-        transform.Rotate(_rotationDirection * _speed * Time.deltaTime);
-    }
+        [SerializeField] 
+        private float _speed = 1f;
 
-    public void SetBoostStatus(bool boostEnabled)
-    {
-        _collider.enabled = !boostEnabled;
+        [SerializeField] 
+        private MeshRenderer _meshRenderer;
 
-        _meshRenderer.material = boostEnabled 
-            ? _materials.BoosterEnabledMaterial 
-            : _materials.StandardMaterial;
+        [SerializeField] 
+        private AsteroidMaterialsScriptableObject _materials;
+
+        private Collider _collider;
+
+        public void Awake()
+        {
+            _collider = GetComponent<Collider>();
+        }
+
+        public void Rotate()
+        {
+            transform.Rotate(_rotationDirection * _speed * Time.deltaTime);
+        }
+
+        public void SetBoostStatus(bool boostEnabled)
+        {
+            _collider.enabled = !boostEnabled;
+
+            _meshRenderer.material = boostEnabled 
+                ? _materials.BoosterEnabledMaterial 
+                : _materials.StandardMaterial;
+        }
     }
 }

@@ -1,23 +1,25 @@
 using System.Collections.Generic;
-using Components;
-using MessageSystem.Data;
+using SpaceShooter.Components;
+using SpaceShooter.MessageSystem;
+using SpaceShooter.MessageSystem.Data;
+using SpaceShooter.View;
 using UnityEngine;
 
-namespace DefaultNamespace.Managers
+namespace SpaceShooter.Managers
 {
-    [RequireComponent(typeof(ObjectPool))]
+    [RequireComponent(typeof(ObjectPool.ObjectPool))]
     public class BoosterManager : MonoBehaviour
     {
         [SerializeField] 
         private BoosterView _boosterView;
         
-        private ObjectPool _objectPool;
+        private ObjectPool.ObjectPool _objectPool;
 
         private List<Booster> _boosters = new List<Booster>();
         
         public void Awake()
         {
-            _objectPool = GetComponent<ObjectPool>();
+            _objectPool = GetComponent<ObjectPool.ObjectPool>();
             if (_objectPool.IsInitialized)
             {
                 OnInit();

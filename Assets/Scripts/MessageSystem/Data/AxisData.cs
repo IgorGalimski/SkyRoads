@@ -1,5 +1,8 @@
-﻿public class AxisData : IMessageData
+﻿namespace SpaceShooter.MessageSystem.Data
 {
-    public float HorizontalAxis { get; set; }
-    public float VerticalAxis{ get; set; }
+    public class AxisData : IMessageData
+    {
+        public float HorizontalAxis { get; set; }
+        public float VerticalAxis { get; set; }
+    }
 }

@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace Data
+namespace SpaceShooter.Data
 {
     [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/MovementDataScriptableObject", order = 1)]
     public class MovementDataScriptableObject : ScriptableObject

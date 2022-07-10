@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class PositionData : IMessageData
+namespace SpaceShooter.MessageSystem.Data
 {
-    public Vector3 Position { get; private set; }
-
-    public PositionData(Vector3 position)
+    public class PositionData : IMessageData
     {
-        Position = position;
+        public Vector3 Position { get; private set; }
+
+        public PositionData(Vector3 position)
+        {
+            Position = position;
+        }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Components
+namespace SpaceShooter.Components
 {
     public class Booster : BaseCollisionComponent
     {

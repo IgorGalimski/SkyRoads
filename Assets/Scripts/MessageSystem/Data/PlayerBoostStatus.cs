@@ -1,9 +1,12 @@
-public class PlayerBoostStatus : IMessageData
+namespace SpaceShooter.MessageSystem.Data
 {
-    public bool BoostStatus { get; private set; }
-
-    public PlayerBoostStatus(bool boostStatus)
+    public class PlayerBoostStatus : IMessageData
     {
-        BoostStatus = boostStatus;
+        public bool BoostStatus { get; }
+
+        public PlayerBoostStatus(bool boostStatus)
+        {
+            BoostStatus = boostStatus;
+        }
     }
 }

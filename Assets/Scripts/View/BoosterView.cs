@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DefaultNamespace
+namespace SpaceShooter.View
 {
     [RequireComponent(typeof(Image))]
     public class BoosterView : MonoBehaviour

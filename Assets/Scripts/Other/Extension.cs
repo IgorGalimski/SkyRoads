@@ -1,18 +1,20 @@
 using System.Collections;
-
 using Random = UnityEngine.Random;
 
-public static class Extension
+namespace SpaceShooter
 {
-    public static T GetRandomElement<T>(this IList list)
+    public static class Extension
     {
-        if (list == null || list.Count == 0)
+        public static T GetRandomElement<T>(this IList list)
         {
-            return default(T);
-        }
+            if (list == null || list.Count == 0)
+            {
+                return default(T);
+            }
 
-        int randomIndex = Random.Range(0, list.Count - 1);
-        
-        return (T)(list[randomIndex]);
+            int randomIndex = Random.Range(0, list.Count - 1);
+
+            return (T)(list[randomIndex]);
+        }
     }
 }
