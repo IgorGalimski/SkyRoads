@@ -11,13 +11,13 @@ namespace SpaceShooter.Managers
 	public class AsteroidsManager : MonoBehaviour
 	{
 		[SerializeField] private int _stepYDistanceInterval = 10;
-
-		private List<Asteroid> _passedAsteroids = new List<Asteroid>();
 		private List<Asteroid> _asteroids;
 
 		private int _asteroidsPassed;
 
 		private ObjectPool.ObjectPool _objectPool;
+
+		private AsteroidPassedData _asteroidPassedData = new AsteroidPassedData();
 
 		public void Awake()
 		{
@@ -33,7 +33,6 @@ namespace SpaceShooter.Managers
 				_objectPool.OnInit += OnInit;
 			}
 
-			MessageSystemManager.AddListener<PositionData>(MessageType.OnPlayerPositionUpdate, OnPlayerPositionUpdate);
 			MessageSystemManager.AddListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
 			MessageSystemManager.AddListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange,
 				OnPlayerBoostStatusChange);
@@ -57,8 +56,6 @@ namespace SpaceShooter.Managers
 				asteroid.OnCollision -= OnCollision;
 			}
 
-			MessageSystemManager.RemoveListener<PositionData>(MessageType.OnPlayerPositionUpdate,
-				OnPlayerPositionUpdate);
 			MessageSystemManager.RemoveListener<TimeData>(MessageType.OnPlayingTimeUpdate, OnPlayingTimeUpdate);
 			MessageSystemManager.RemoveListener<PlayerBoostStatus>(MessageType.OnPlayerBoostStatusChange,
 				OnPlayerBoostStatusChange);
@@ -74,22 +71,10 @@ namespace SpaceShooter.Managers
 
 		private void OnSetNewPosition(GameObject instance)
 		{
-			Asteroid asteroid = instance.GetComponent<Asteroid>();
-			if (asteroid != null)
-			{
-				if (_passedAsteroids.Contains(asteroid))
-				{
-					_passedAsteroids.Remove(asteroid);
-				}
-				else
-				{
-					Debug.LogWarning(string.Format("PassedAsteroid doesn't contain asteroid {0}", asteroid.name));
-				}
-			}
-			else
-			{
-				Debug.LogWarning("asteroid is null");
-			}
+			_asteroidsPassed++;
+			_asteroidPassedData.Count = _asteroidsPassed;
+
+			MessageSystemManager.Invoke(MessageType.OnAsteroidPassed, _asteroidPassedData);
 		}
 
 		private void OnInit()
@@ -120,25 +105,6 @@ namespace SpaceShooter.Managers
 		private void OnCollision()
 		{
 			MessageSystemManager.Invoke(MessageType.OnAsteroidCollision);
-		}
-
-		private void OnPlayerPositionUpdate(PositionData positionData)
-		{
-			foreach (Asteroid asteroid in _asteroids)
-			{
-				if (asteroid.transform.position.y < positionData.Position.y)
-				{
-					if (!_passedAsteroids.Contains(asteroid))
-					{
-						_passedAsteroids.Add(asteroid);
-
-						_asteroidsPassed++;
-
-						MessageSystemManager.Invoke(MessageType.OnAsteroidPassed,
-							new AsteroidPassedData(_asteroidsPassed));
-					}
-				}
-			}
 		}
 
 		private void OnPlayingTimeUpdate(TimeData timeData)

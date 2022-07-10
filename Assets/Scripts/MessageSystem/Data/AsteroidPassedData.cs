@@ -4,12 +4,7 @@ namespace SpaceShooter.MessageSystem.Data
     {
         private const string ASTEROIDS_PASSED_FORMAT = "Asteroids: {0}";
 
-        public int Count { get; }
-
-        public AsteroidPassedData(int count)
-        {
-            Count = count;
-        }
+        public int Count { get; set; }
 
         public string GetFormattedCount()
         {

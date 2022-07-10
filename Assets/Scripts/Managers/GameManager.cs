@@ -16,7 +16,7 @@ namespace SpaceShooter.Managers
 
         private int _score;
 
-        private int _asteroidPassed;
+        private AsteroidPassedData _asteroidPassedData = new AsteroidPassedData();
 
         private int _playingTime;
 
@@ -53,10 +53,9 @@ namespace SpaceShooter.Managers
         private void OnAsteroidCollision()
         {
             TimeData timeData = new TimeData(_playingTime);
-            AsteroidPassedData asteroidPassedData = new AsteroidPassedData(_asteroidPassed);
             ScoreData scoreData = new ScoreData(_score, BestScore);
 
-            LevelFailData levelFailData = new LevelFailData(timeData, asteroidPassedData, scoreData, _record);
+            LevelFailData levelFailData = new LevelFailData(timeData, _asteroidPassedData, scoreData, _record);
 
             MessageSystemManager.Invoke(MessageType.OnGameFail, levelFailData);
         }
@@ -65,7 +64,7 @@ namespace SpaceShooter.Managers
         {
             _score += _asteroidPassedScore;
 
-            _asteroidPassed++;
+            _asteroidPassedData = asteroidPassedData;
         }
 
         private void OnPlayingTimeUpdate(TimeData timeData)
