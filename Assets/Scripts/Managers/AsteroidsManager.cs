@@ -68,7 +68,6 @@ namespace SpaceShooter.Managers
 		{
 			foreach (var asteroid in _asteroids)
 			{
-				Debug.LogError(asteroid.name);
 				asteroid.SetBoostStatus(playerBoostStatus.BoostStatus);
 			}
 		}
